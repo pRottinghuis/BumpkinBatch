@@ -1,47 +1,31 @@
 package team.rusty.bumpkinbatch.entity;
 
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
-public class ReaperEntity extends Monster {
-    public ReaperEntity(EntityType<? extends Monster> entityType, Level level) {
+public class ReaperEntity extends AbstractSkeleton {
+    public ReaperEntity(EntityType<? extends AbstractSkeleton> entityType, Level level) {
         super(entityType, level);
     }
 
-    @Override
-    public void registerGoals() {
-
-    }
-
-
-    public void addBehaviorGoals() {
-
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
-        return null;
+        return Monster.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     @Override
-    public void defineSynchedData() {
-
+    protected SoundEvent getStepSound() {
+        return SoundEvents.SKELETON_STEP;
     }
 
     @Override
-    public int getExperienceReward(Player player) {
-        return 0;
+    protected boolean isSunBurnTick() {
+        return false;
     }
 
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void aiStep() {
-
-    }
 }

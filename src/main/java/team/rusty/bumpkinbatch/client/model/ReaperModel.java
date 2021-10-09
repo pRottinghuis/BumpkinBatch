@@ -65,7 +65,11 @@ public class ReaperModel extends EntityModel<ReaperEntity> {
     }
 
     @Override
-    public void renderToBuffer(PoseStack p_103111_, VertexConsumer p_103112_, int p_103113_, int p_103114_, float p_103115_, float p_103116_, float p_103117_, float p_103118_) {
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        root.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+    }
 
+    public ModelPart root() {
+        return root;
     }
 }
