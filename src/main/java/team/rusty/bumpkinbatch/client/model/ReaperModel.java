@@ -44,9 +44,9 @@ public class ReaperModel extends EntityModel<ReaperEntity> {
         left_leg.texOffs(6, 10).addBox(-3.0F, -11.0F, 0.0F, 2.0F, 11.0F, 1.0F, 0.0F, false);
         */
 
-        var  left_leg = root.addOrReplaceChild("left_leg", CubeListBuilder.create()
-                .texOffs(6, 10).addBox(-3.0F, -11.0F, 0.0F, 2.0F, 11.0F, 1.0F),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+//        var  left_leg = root.addOrReplaceChild("left_leg", CubeListBuilder.create()
+//                .texOffs(6, 10).addBox(-3.0F, -11.0F, 0.0F, 2.0F, 11.0F, 1.0F),
+//                PartPose.offset(0.0F, 24.0F, 0.0F));
 
         var waist = root.addOrReplaceChild("waist", CubeListBuilder.create(),
                 PartPose.rotation(0.0F, 12.0F, 0.0F));
