@@ -70,6 +70,7 @@ public class ReaperModel extends EntityModel<ReaperEntity> {
                 PartPose.rotation(-5.0F, -15.0F, 0.0F));
 
 
+
         //mesh, height, width
         return LayerDefinition.create(mesh, 128, 128);
     }
