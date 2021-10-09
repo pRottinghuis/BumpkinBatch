@@ -12,11 +12,11 @@ public class BFoods {
 
     public static final FoodProperties ORESOES = makeCandy(MobEffects.MOVEMENT_SPEED);
     public static final FoodProperties GUMMY_BOARS = makeCandy(MobEffects.NIGHT_VISION);
-    public static final FoodProperties CREEPER_CRACKS = makeCandy(MobEffects.CONFUSION);
+    public static final FoodProperties CREEPER_CRACKS = makeCandy(MobEffects.DAMAGE_BOOST);
 
 
 
     public static FoodProperties makeCandy(MobEffect effect) {
-        return (new FoodProperties.Builder()).nutrition(3).saturationMod(0.6F).effect(new MobEffectInstance(effect, 100, 1), 1.0F).build();
+        return (new FoodProperties.Builder()).nutrition(2).saturationMod(0.1F).effect(new MobEffectInstance(effect, 400, 1), 1.0F).build();
     }
 }

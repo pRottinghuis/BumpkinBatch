@@ -7,7 +7,6 @@ import team.rusty.bumpkinbatch.BumpkinBatch;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = BumpkinBatch.ID)
 public class DataGen {
-
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         var dataGen = event.getGenerator();

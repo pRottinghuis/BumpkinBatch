@@ -26,6 +26,6 @@ public class BItemModelProvider extends ItemModelProvider {
 
     public void candyTextures(RegistryObject<Item> item) {
         String itemName = item.get().getRegistryName().getPath();
-        singleTexture(itemName, new ResourceLocation("item/generated"), "layer0", new ResourceLocation("minecraft", "item/" + itemName));
+        singleTexture(itemName, new ResourceLocation("item/generated"), "layer0", new ResourceLocation("bumpkinbatch", "item/" + itemName));
     }
 }
