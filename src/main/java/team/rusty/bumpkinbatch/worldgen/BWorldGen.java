@@ -50,6 +50,7 @@ public class BWorldGen {
                 .configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));
+        //generations.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.REPLACE_BLOBS);
 
         // Mob spawns
         BiomeDefaultFeatures.monsters(mobSpawns, 19, 1, 100);
