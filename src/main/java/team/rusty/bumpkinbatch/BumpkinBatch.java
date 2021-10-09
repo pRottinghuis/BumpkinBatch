@@ -11,6 +11,8 @@ public class BumpkinBatch {
 
     public BumpkinBatch() {
         IEventBus mod = FMLJavaModLoadingContext.get().getModEventBus();
-        //Testing a comment
+        //Testing a coment
+        //Another comment
+        //Another nother comment
     }
 }
