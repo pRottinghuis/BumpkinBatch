@@ -1,9 +1,10 @@
-package com.example.examplemod;
+package team.rusty.bumpkinbatch;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -17,9 +18,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.stream.Collectors;
 
-@Mod("bumpkinbatch")
+@Mod(BumpkinBatch.ID)
 public class BumpkinBatch {
+
+    public static final String ID = "bumpkinbatch";
+
     public BumpkinBatch() {
+        IEventBus mod = FMLJavaModLoadingContext.get().getModEventBus();
 
     }
 }
