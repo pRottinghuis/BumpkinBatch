@@ -11,9 +11,11 @@ public class ReaperEntity extends Monster {
         super(entityType, level);
     }
 
+    @Override
     public void registerGoals() {
 
     }
+
 
     public void addBehaviorGoals() {
 
@@ -23,19 +25,22 @@ public class ReaperEntity extends Monster {
 
     }
 
-
+    @Override
     public void defineSynchedData() {
 
     }
 
+    @Override
     public int getExperienceReward(Player player) {
 
     }
 
+    @Override
     public void tick() {
 
     }
 
+    @Override
     public void aiStep() {
 
     }
