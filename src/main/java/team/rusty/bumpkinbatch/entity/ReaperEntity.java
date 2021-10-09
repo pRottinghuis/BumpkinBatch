@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 public class ReaperEntity extends Monster {
-    protected ReaperEntity(EntityType<? extends Monster> entityType, Level level) {
+    public ReaperEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
     }
 
