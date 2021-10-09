@@ -14,5 +14,5 @@ public class BEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, BumpkinBatch.ID);
 
     public static final RegistryObject<EntityType<ReaperEntity>> REAPER = ENTITIES.register("reaper", () -> EntityType.Builder.of(ReaperEntity::new, MobCategory.MONSTER).sized(1, 1).build(BumpkinBatch.ID + ":reaper"));
-
+    //
 }
