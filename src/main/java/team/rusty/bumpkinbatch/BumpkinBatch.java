@@ -9,7 +9,6 @@ import team.rusty.bumpkinbatch.worldgen.BWorldGen;
 
 @Mod(BumpkinBatch.ID)
 public class BumpkinBatch {
-
     public static final String ID = "bumpkinbatch";
 
     public BumpkinBatch() {
@@ -18,5 +17,6 @@ public class BumpkinBatch {
         BBlocks.BLOCKS.register(mod);
         BItems.ITEMS.register(mod);
         BWorldGen.BIOMES.register(mod);
+        BWorldGen.FEATURES.register(mod);
     }
 }

@@ -9,35 +9,34 @@ import net.minecraft.world.level.Level;
 public class ReaperEntity extends Monster {
     protected ReaperEntity(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
+    }
 
-        public void registerGoals() {
+    public void registerGoals() {
 
-        }
+    }
 
-        public void addBehaviorGoals() {
+    public void addBehaviorGoals() {
 
-        }
+    }
 
-        public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.Builder createAttributes() {
 
-        }
+    }
 
 
-        public void defineSynchedData() {
+    public void defineSynchedData() {
 
-        }
+    }
 
-        public int getExperienceReward(Player player) {
+    public int getExperienceReward(Player player) {
 
-        }
+    }
 
-        public void tick() {
+    public void tick() {
 
-        }
+    }
 
-        public void aiStep() {
-
-        }
+    public void aiStep() {
 
     }
 }
