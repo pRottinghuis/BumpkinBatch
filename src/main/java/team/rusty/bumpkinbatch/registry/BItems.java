@@ -22,7 +22,7 @@ public class BItems {
     // confusion - east and west twicks
     // poison - Sizzlers
     // regeneration - chocolate smooches
-    // Strengths - Creeper cracks
+    // Strength - Creeper cracks
 
 
 
