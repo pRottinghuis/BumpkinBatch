@@ -22,7 +22,7 @@ public class ReaperEntity extends Monster {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-
+        return null;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ReaperEntity extends Monster {
 
     @Override
     public int getExperienceReward(Player player) {
-
+        return 0;
     }
 
     @Override
