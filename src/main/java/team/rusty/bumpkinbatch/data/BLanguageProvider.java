@@ -16,7 +16,7 @@ public class BLanguageProvider extends LanguageProvider {
         //Candies
         addItem(BItems.EAST_TWICKS, "East Twicks");
         addItem(BItems.WEST_TWICKS, "West Twicks");
-        addItem(BItems.ORESEOES, "Ores-e-oes");
+        addItem(BItems.ORESEOES, "Ore-O's");
         addItem(BItems.GUMMY_BOARS, "Gummy Boars");
         addItem(BItems.CREEPER_CRACKS, "Creeper Cracks");
     }
