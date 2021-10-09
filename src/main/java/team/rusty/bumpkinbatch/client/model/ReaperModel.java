@@ -8,6 +8,7 @@ import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
@@ -47,13 +48,27 @@ public class ReaperModel extends EntityModel<ReaperEntity> {
                 .texOffs(6, 10).addBox(-3.0F, -11.0F, 0.0F, 2.0F, 11.0F, 1.0F),
                 PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        var  right_leg = root.addOrReplaceChild("right_leg", CubeListBuilder.create()
-                .texOffs(0, 10).addBox(1.0F, -11.0F, 0.0F, 2.0F, 11.0F, 1.0F),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+        var waist = root.addOrReplaceChild("waist", CubeListBuilder.create(),
+                PartPose.rotation(0.0F, 12.0F, 0.0F));
 
-        var  face = root.addOrReplaceChild("face", CubeListBuilder.create()
-                .texOffs(0, 0).addBox(1.0F, -11.0F, 0.0F, 2.0F, 11.0F, 1.0F),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+        var body = waist.addOrReplaceChild("body", CubeListBuilder.create()
+                .texOffs(0, 64).addBox(-5.0F, -15.0F, -2.0F, 10.0F, 18.0F, 4.0F)
+                .texOffs(60, 60).addBox(-5.0F, -15.0F, -2.0F, 10.0F, 18.0F, 4.0F, new CubeDeformation(0.5F)),
+                PartPose.rotation(0.0F, -12.0F, 0.0F));
+
+        var head = body.addOrReplaceChild("head", CubeListBuilder.create()
+                .texOffs(28, 64).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 9.0F, 8.0F),
+                PartPose.rotation(0.0F, -16.0F, 0.0F));
+
+        var hat = head.addOrReplaceChild("hat", CubeListBuilder.create()
+                .texOffs(32, 0).addBox(-4.0F, -24.0F, -4.0F, 8.0F, 9.0F, 8.0F, new CubeDeformation(0.5F)),
+                PartPose.rotation(0.0F, 16.0F, 0.0F));
+
+        var rightArm = body.addOrReplaceChild("right_arm", CubeListBuilder.create()
+                .texOffs(52, 81).addBox(-3.0F, 0.0F, -1.0F, 2.0F, 20.0F, 2.0F)
+                .texOffs(0, 32).addBox(-4.0F, 0.0F, -2.0F, 3.0F, 9.0F, 4.0F, new CubeDeformation(0.5F)),
+                PartPose.rotation(-5.0F, -15.0F, 0.0F));
+
 
         //mesh, height, width
         return LayerDefinition.create(mesh, 128, 128);
