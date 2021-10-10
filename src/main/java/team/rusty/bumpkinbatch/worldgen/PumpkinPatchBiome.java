@@ -40,16 +40,26 @@ public class PumpkinPatchBiome extends AbstractBiome {
                 .waterFogColor(0x50533)
                 .build();
 
+        BiomeDefaultFeatures.addDefaultCrystalFormations(generation);
+        BiomeDefaultFeatures.addDefaultCarvers(generation);
+        BiomeDefaultFeatures.addDefaultOres(generation);
+        BiomeDefaultFeatures.addDefaultSoftDisks(generation);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(generation);
+        BiomeDefaultFeatures.addDefaultLakes(generation);
+        BiomeDefaultFeatures.addDefaultSprings(generation);
+        BiomeDefaultFeatures.addDefaultMonsterRoom(generation);
+
         generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
                 .configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));
-        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.CROSS_FEATURE.get()
+        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.CROSS_FEATURE.get()
                 .configured(new BlockStateConfiguration(Blocks.COBBLESTONE.defaultBlockState()))
                 .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
-                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.3f, 1))));
+                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.1f, 1))));
 
         BiomeDefaultFeatures.monsters(spawns, 19, 1, 100);
+        BiomeDefaultFeatures.commonSpawns(spawns);
     }
 }
