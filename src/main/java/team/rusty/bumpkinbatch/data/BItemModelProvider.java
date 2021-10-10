@@ -16,7 +16,6 @@ public class BItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-
         candyTextures(BItems.EAST_TWICKS);
         candyTextures(BItems.WEST_TWICKS);
         candyTextures(BItems.ORESEOES);
@@ -25,7 +24,7 @@ public class BItemModelProvider extends ItemModelProvider {
     }
 
     public void candyTextures(RegistryObject<Item> item) {
-        String itemName = item.get().getRegistryName().getPath();
+        String itemName = item.getId().getPath();
         singleTexture(itemName, new ResourceLocation("item/generated"), "layer0", new ResourceLocation("bumpkinbatch", "item/" + itemName));
     }
 }
