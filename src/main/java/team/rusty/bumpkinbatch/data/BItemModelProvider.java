@@ -18,7 +18,7 @@ public class BItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         candyTextures(BItems.EAST_TWICKS);
         candyTextures(BItems.WEST_TWICKS);
-        candyTextures(BItems.ORESEOES);
+        candyTextures(BItems.ORE_O);
         candyTextures(BItems.GUMMY_BOARS);
         candyTextures(BItems.CREEPER_CRACKS);
     }
