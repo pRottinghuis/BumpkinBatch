@@ -22,7 +22,7 @@ public class BumpkinBatch {
         BItems.ITEMS.register(mod);
         BWorldGen.BIOMES.register(mod);
         BEntities.ENTITIES.register(mod);
-        //BWorldGen.FEATURES.register(mod);
+        BWorldGen.FEATURES.register(mod);
 
 
         mod.addListener(BEntities::addEntityAttribs);
