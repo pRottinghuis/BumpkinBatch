@@ -43,7 +43,7 @@ public class GraveStoneFeature extends Feature<NoneFeatureConfiguration> {
         setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
 
         // middle layer
-        mutable.move(-3, 1, 0);
+        mutable.move(-2, 1, 0);
         setBlock(level, mutable, Blocks.COBBLESTONE_WALL.defaultBlockState());
         mutable.move(1, 0, 0);
         setBlock(level, mutable, Blocks.CRACKED_STONE_BRICKS.defaultBlockState());
@@ -51,7 +51,7 @@ public class GraveStoneFeature extends Feature<NoneFeatureConfiguration> {
         setBlock(level, mutable, Blocks.COBBLESTONE_WALL.defaultBlockState());
 
         //top layer
-        mutable.move(-3, 1, 0);
+        mutable.move(-2, 1, 0);
         setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
         mutable.move(1, 0, 0);
         setBlock(level, mutable, Blocks.STONE_BRICKS.defaultBlockState());
