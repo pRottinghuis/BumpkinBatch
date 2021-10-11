@@ -1,4 +1,4 @@
-package team.rusty.util.worldgen;
+package team.rusty.util.worldgen.biome;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
