@@ -16,9 +16,11 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProv
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import team.rusty.util.worldgen.AbstractBiome;
 
+import java.util.List;
 import java.util.Set;
 
 public class PumpkinPatchBiome extends AbstractBiome {
@@ -61,5 +63,10 @@ public class PumpkinPatchBiome extends AbstractBiome {
 
         BiomeDefaultFeatures.monsters(spawns, 19, 1, 100);
         BiomeDefaultFeatures.commonSpawns(spawns);
+    }
+
+    @Override
+    public List<SpawnEntry> getSpawnEntries() {
+        return List.of(SpawnEntry.of(BiomeManager.BiomeType.WARM, 1));
     }
 }
