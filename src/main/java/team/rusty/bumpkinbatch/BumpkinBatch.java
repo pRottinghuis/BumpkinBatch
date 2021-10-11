@@ -9,6 +9,7 @@ import team.rusty.bumpkinbatch.client.ClientHandler;
 import team.rusty.bumpkinbatch.registry.BBlocks;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BItems;
+import team.rusty.bumpkinbatch.registry.BStructures;
 import team.rusty.bumpkinbatch.worldgen.BWorldGen;
 
 @Mod(BumpkinBatch.ID)
@@ -23,6 +24,7 @@ public class BumpkinBatch {
         BWorldGen.BIOMES.register(mod);
         BEntities.ENTITIES.register(mod);
         BWorldGen.FEATURES.register(mod);
+        BStructures.STRUCTURES.register(mod);
 
 
         mod.addListener(BEntities::addEntityAttribs);
