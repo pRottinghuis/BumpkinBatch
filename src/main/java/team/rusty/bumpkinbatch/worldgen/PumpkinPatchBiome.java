@@ -7,6 +7,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -81,17 +82,20 @@ public class PumpkinPatchBiome extends AbstractBiome {
                 .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.1f, 1))));
         // Leaf piles
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, Feature.BLOCK_PILE
-                .configured(new BlockPileConfiguration(new SimpleStateProvider(Blocks.OAK_LEAVES.defaultBlockState())))
+                .configured(new BlockPileConfiguration(new SimpleStateProvider(Blocks.OAK_LEAVES.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true))))
                 .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
                 .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
-                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.1f, 1))));
+                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(2, 0.4f, 1))));
+        // Bush tree
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.TREE
-                .configured((new TreeConfiguration.TreeConfigurationBuilder(new SimpleStateProvider(Blocks.JUNGLE_LOG.defaultBlockState()),
+                .configured((new TreeConfiguration.TreeConfigurationBuilder(new SimpleStateProvider(Blocks.OAK_LOG.defaultBlockState()),
                         new StraightTrunkPlacer(1, 0, 0),
                         new SimpleStateProvider(Blocks.OAK_LEAVES.defaultBlockState()),
                         new SimpleStateProvider(Blocks.OAK_SAPLING.defaultBlockState()),
                         new BushFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 2),
-                        new TwoLayersFeatureSize(0, 0, 0))).build()));
+                        new TwoLayersFeatureSize(0, 0, 0))).build())
+                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
+                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES))));
 
         BiomeDefaultFeatures.monsters(spawns, 19, 1, 100);
         BiomeDefaultFeatures.commonSpawns(spawns);
