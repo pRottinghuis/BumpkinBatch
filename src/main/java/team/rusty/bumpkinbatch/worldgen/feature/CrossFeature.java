@@ -1,4 +1,4 @@
-package team.rusty.bumpkinbatch.worldgen;
+package team.rusty.bumpkinbatch.worldgen.feature;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.world.level.block.state.BlockState;
