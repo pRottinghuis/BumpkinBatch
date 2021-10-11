@@ -13,6 +13,7 @@ public class CrossFeature extends Feature<BlockStateConfiguration> {
 
     @Override
     public boolean place(FeaturePlaceContext<BlockStateConfiguration> context) {
+
         var level = context.level();
         var config = context.config();
         // get the block type from the config

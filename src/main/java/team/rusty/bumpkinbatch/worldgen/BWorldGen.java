@@ -2,6 +2,7 @@ package team.rusty.bumpkinbatch.worldgen;
 
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,4 +19,6 @@ public class BWorldGen {
 
     /** Features */
     public static final RegistryObject<Feature<BlockStateConfiguration>> CROSS_FEATURE = FEATURES.register("cross_feature", () -> new CrossFeature(BlockStateConfiguration.CODEC));
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> GRAVESTONE_FEATURE = FEATURES.register("gravestone", () -> new GraveStoneFeature(NoneFeatureConfiguration.CODEC));
+
 }
