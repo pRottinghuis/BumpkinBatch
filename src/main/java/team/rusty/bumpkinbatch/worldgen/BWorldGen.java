@@ -7,6 +7,8 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import team.rusty.bumpkinbatch.BumpkinBatch;
+import team.rusty.bumpkinbatch.worldgen.feature.CrossFeature;
+import team.rusty.bumpkinbatch.worldgen.feature.GraveStoneFeature;
 import team.rusty.util.worldgen.AbstractBiome;
 import team.rusty.util.worldgen.AbstractBiomeRegistry;
 
