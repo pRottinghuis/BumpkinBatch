@@ -2,12 +2,11 @@ package team.rusty.bumpkinbatch.worldgen.feature;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.level.block.state.properties.WallSide;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -20,7 +19,7 @@ public class GraveStoneFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private Block[] bricks = {Blocks.STONE_BRICKS, Blocks.MOSSY_STONE_BRICKS, Blocks.CRACKED_STONE_BRICKS};
-    private Block[] cobbleWalls= {Blocks.COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE_WALL};
+    private Block[] cobbleWalls = {Blocks.COBBLESTONE_WALL, Blocks.MOSSY_COBBLESTONE_WALL};
     private Random random = new Random();
 
     @Override
@@ -34,17 +33,31 @@ public class GraveStoneFeature extends Feature<NoneFeatureConfiguration> {
         // Cursor to place blocks
         var mutable = pos.mutable();
 
-        // Used to randomize if structure is rotated
-        int rotation = random.nextInt(2);
+        // chooses which gravestone type is chosen
+        int type = random.nextInt(2);
 
-        // Chooses either regular or rotated structure
-        if (rotation == 0) {
-            // don't spawn in the water or any other non-solid (non occluding) block for any blocks under the feature
-            if (canPlace(level, pos)) return false;
-            type1(level, mutable, bricks[random.nextInt(bricks.length)], cobbleWalls[random.nextInt(cobbleWalls.length)]);
-        } else {
-            if (canPlaceRotated(level, pos)) return false;
-            type1Rotated(level, mutable, bricks[random.nextInt(bricks.length)], cobbleWalls[random.nextInt(cobbleWalls.length)]);
+        // Used to randomize if structure is rotated
+        boolean rotated = random.nextBoolean();
+
+        if (type == 0) {
+            // Chooses either regular or rotated structure
+            if (rotated) {
+                // don't spawn in the water or any other non-solid (non occluding) block for any blocks under the feature
+                if (canPlace(level, pos)) return false;
+                type0(level, mutable, true);
+            } else {
+                if (canPlaceRotated(level, pos)) return false;
+                type0(level, mutable, false);
+            }
+        } else if (type == 1) {
+            if (rotated) {
+                // don't spawn in the water or any other non-solid (non occluding) block for any blocks under the feature
+                if (canPlace(level, pos)) return false;
+                type1(level, mutable, true);
+            } else {
+                if (canPlaceRotated(level, pos)) return false;
+                type1(level, mutable, false);
+            }
         }
         return false;
     }
@@ -62,57 +75,116 @@ public class GraveStoneFeature extends Feature<NoneFeatureConfiguration> {
         return blocks[random.nextInt(blocks.length)];
     }
 
-    private void type1(WorldGenLevel level, BlockPos.MutableBlockPos mutable, Block brick, Block cobbleWall) {
-        //draws from left to right from bottom to top
-        //bottom layer
-        mutable.move(-1, 0, 0);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
-        mutable.move(1, 0, 0);
-        setBlock(level, mutable, Blocks.ANDESITE.defaultBlockState());
-        mutable.move(1, 0, 0);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+    private void type0(WorldGenLevel level, BlockPos.MutableBlockPos mutable, boolean rotated) {
+        if (rotated) {
+            //draws from left to right from bottom to top
+            //bottom layer
+            mutable.move(-1, 0, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.ANDESITE.defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
 
-        // middle layer
-        mutable.move(-2, 1, 0);
-        setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.EAST_WALL, WallSide.LOW));
-        mutable.move(1, 0, 0);
-        setBlock(level, mutable, randBlock(bricks).defaultBlockState());
-        mutable.move(1, 0, 0);
-        setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.WEST_WALL, WallSide.LOW));
+            // middle layer
+            mutable.move(-2, 1, 0);
+            setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.EAST_WALL, WallSide.LOW));
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.WEST_WALL, WallSide.LOW));
 
-        //top layer
-        mutable.move(-2, 1, 0);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
-        mutable.move(1, 0, 0);
-        setBlock(level, mutable, Blocks.STONE_BRICKS.defaultBlockState());
-        mutable.move(1, 0, 0);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+            //top layer
+            mutable.move(-2, 1, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.STONE_BRICKS.defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+        } else {
+            // rotated feature
+
+            //draws from left to right from bottom to top
+            //bottom layer
+            mutable.move(0, 0, -1);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.ANDESITE.defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+
+            // middle layer
+            mutable.move(0, 1, -2);
+            setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.SOUTH_WALL, WallSide.LOW));
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.NORTH_WALL, WallSide.LOW));
+
+            //top layer
+            mutable.move(0, 1, -2);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+        }
     }
 
-    private void type1Rotated(WorldGenLevel level, BlockPos.MutableBlockPos mutable, Block brick, Block cobbleWall) {
-        //draws from left to right from bottom to top
-        //bottom layer
-        mutable.move(0, 0, -1);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
-        mutable.move(0, 0, 1);
-        setBlock(level, mutable, Blocks.ANDESITE.defaultBlockState());
-        mutable.move(0, 0, 1);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+    private void type1(WorldGenLevel level, BlockPos.MutableBlockPos mutable, boolean rotated) {
+        if (rotated) {
+            //draws from left to right from bottom to top
+            //bottom layer
+            mutable.move(-1, 0, 0);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
 
-        // middle layer
-        mutable.move(0, 1, -2);
-        setBlock(level, mutable, cobbleWall.defaultBlockState().setValue(BlockStateProperties.SOUTH_WALL, WallSide.LOW));
-        mutable.move(0, 0, 1);
-        setBlock(level, mutable, brick.defaultBlockState());
-        mutable.move(0, 0, 1);
-        setBlock(level, mutable, cobbleWall.defaultBlockState().setValue(BlockStateProperties.NORTH_WALL, WallSide.LOW));
+            // middle layer
+            mutable.move(-2, 1, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_STAIRS.defaultBlockState().setValue(BlockStateProperties.STAIRS_SHAPE, StairsShape.STRAIGHT).setValue(BlockStateProperties.HALF, Half.TOP).setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST));
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_STAIRS.defaultBlockState().setValue(BlockStateProperties.STAIRS_SHAPE, StairsShape.STRAIGHT).setValue(BlockStateProperties.HALF, Half.TOP).setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST));
 
-        //top layer
-        mutable.move(0, 1, -2);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
-        mutable.move(0, 0, 1);
-        setBlock(level, mutable, Blocks.STONE_BRICKS.defaultBlockState());
-        mutable.move(0, 0, 1);
-        setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+            //top layer
+            mutable.move(-2, 1, 0);
+            setBlock(level, mutable, Blocks.STONE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+            mutable.move(1, 0, 0);
+            setBlock(level, mutable, Blocks.STONE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+        } else {
+            // rotated feature
+
+            //draws from left to right from bottom to top
+            //bottom layer
+            mutable.move(0, 0, -1);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.ANDESITE.defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE.defaultBlockState());
+
+            // middle layer
+            mutable.move(0, 1, -2);
+            setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.SOUTH_WALL, WallSide.LOW));
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, randBlock(bricks).defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, randBlock(cobbleWalls).defaultBlockState().setValue(BlockStateProperties.NORTH_WALL, WallSide.LOW));
+
+            //top layer
+            mutable.move(0, 1, -2);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.STONE_BRICKS.defaultBlockState());
+            mutable.move(0, 0, 1);
+            setBlock(level, mutable, Blocks.POLISHED_ANDESITE_SLAB.defaultBlockState().setValue(BlockStateProperties.SLAB_TYPE, SlabType.BOTTOM));
+        }
+
     }
 }
