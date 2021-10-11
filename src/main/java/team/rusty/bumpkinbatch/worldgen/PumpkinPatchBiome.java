@@ -3,6 +3,8 @@ package team.rusty.bumpkinbatch.worldgen;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.FoliageColor;
+import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -20,9 +22,11 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
-import team.rusty.util.worldgen.AbstractBiome;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import team.rusty.util.worldgen.biome.AbstractBiome;
 
 import java.util.List;
 import java.util.Set;
@@ -36,7 +40,7 @@ public class PumpkinPatchBiome extends AbstractBiome {
         depth = 0.1f;
         scale = 0.2f;
         temperature = 0.9f;
-        downfall = 1.0f;
+        downfall = 0.5f;
 
         // Effects
         effects = new BiomeSpecialEffects.Builder()
@@ -44,6 +48,8 @@ public class PumpkinPatchBiome extends AbstractBiome {
                 .fogColor(0xffcdab)
                 .waterColor(0x3f76e4)
                 .waterFogColor(0x50533)
+                .grassColorOverride(0xc5d141)
+                .foliageColorOverride(0xc5d141)
                 .build();
 
         BiomeDefaultFeatures.addDefaultCrystalFormations(generation);
@@ -80,6 +86,11 @@ public class PumpkinPatchBiome extends AbstractBiome {
                 .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
                 .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
                 .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.1f, 1))));
+        // Lone trees
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Features.FANCY_OAK
+                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
+                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
+                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.3f, 1))));
         // Leaf piles
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, Feature.BLOCK_PILE
                 .configured(new BlockPileConfiguration(new SimpleStateProvider(Blocks.OAK_LEAVES.defaultBlockState().setValue(BlockStateProperties.PERSISTENT, true))))

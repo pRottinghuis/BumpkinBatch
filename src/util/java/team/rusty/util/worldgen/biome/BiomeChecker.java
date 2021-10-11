@@ -1,4 +1,4 @@
-package team.rusty.util.worldgen;
+package team.rusty.util.worldgen.biome;
 
 import net.minecraft.resources.ResourceLocation;
 import org.objectweb.asm.ClassReader;

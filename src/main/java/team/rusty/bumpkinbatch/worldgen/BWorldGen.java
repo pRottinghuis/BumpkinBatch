@@ -9,8 +9,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import team.rusty.bumpkinbatch.BumpkinBatch;
 import team.rusty.bumpkinbatch.worldgen.feature.CrossFeature;
 import team.rusty.bumpkinbatch.worldgen.feature.GraveStoneFeature;
-import team.rusty.util.worldgen.AbstractBiome;
-import team.rusty.util.worldgen.AbstractBiomeRegistry;
+import team.rusty.util.worldgen.biome.AbstractBiome;
+import team.rusty.util.worldgen.biome.AbstractBiomeRegistry;
 
 public class BWorldGen {
     public static final AbstractBiomeRegistry BIOMES = new AbstractBiomeRegistry(BumpkinBatch.ID);
