@@ -38,7 +38,7 @@ public class PumpkinPatchBiome extends AbstractBiome {
         precipitation = Biome.Precipitation.RAIN;
         category = Biome.BiomeCategory.PLAINS;
         depth = 0.1f;
-        scale = 0.2f;
+        scale = 0.1f;
         temperature = 0.9f;
         downfall = 0.5f;
 
@@ -68,18 +68,18 @@ public class PumpkinPatchBiome extends AbstractBiome {
                 .configured(NoneFeatureConfiguration.INSTANCE)
                 .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
                 .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
-                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.1f, 1))));  // (# spawned guaranteed per chunk, chance spawn extra per chunk, count extra per chunk)
+                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.5f, 1))));  // (# spawned guaranteed per chunk, chance spawn extra per chunk, count extra per chunk)
         // Pumpkins
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
                 .configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));
         // Cross
-        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.CROSS_FEATURE.get()
-                .configured(new BlockStateConfiguration(Blocks.COBBLESTONE.defaultBlockState()))
-                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
-                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
-                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.05f, 1))));
+//        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.CROSS_FEATURE.get()
+//                .configured(new BlockStateConfiguration(Blocks.COBBLESTONE.defaultBlockState()))
+//                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
+//                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
+//                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.05f, 1))));
         // Hay bales
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, Feature.BLOCK_PILE
                 .configured(new BlockPileConfiguration(new SimpleStateProvider(Blocks.HAY_BLOCK.defaultBlockState())))

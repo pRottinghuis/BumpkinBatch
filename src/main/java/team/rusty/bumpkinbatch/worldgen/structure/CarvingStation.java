@@ -27,15 +27,15 @@ import team.rusty.bumpkinbatch.BumpkinBatch;
 
 import java.util.Random;
 
-public class GraveYard extends StructureFeature<NoneFeatureConfiguration> {
+public class CarvingStation extends StructureFeature<NoneFeatureConfiguration> {
 
-    public GraveYard() {
+    public CarvingStation() {
         super(NoneFeatureConfiguration.CODEC);
     }
 
     @Override
     public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-        return GraveYard.FeatureStart::new;
+        return CarvingStation.FeatureStart::new;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class GraveYard extends StructureFeature<NoneFeatureConfiguration> {
             // Adjusts hight of all pieces.
             this.pieces.forEach(piece -> piece.move(0, 0, 0));
             // Adjusts height of bounding box
-            this.pieces.forEach(piece -> piece.getBoundingBox().move(0, -1, 0));
+            this.pieces.forEach(piece -> piece.getBoundingBox().move(0, 1, 0));
 
             // Centers structure on
             Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
