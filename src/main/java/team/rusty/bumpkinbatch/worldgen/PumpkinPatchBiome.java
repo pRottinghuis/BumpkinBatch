@@ -63,6 +63,8 @@ public class PumpkinPatchBiome extends AbstractBiome {
 
         generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
 
+        // carving stations
+        generation.addStructureStart(BiomeDefaults.CARVING_STATION_CONFIGURED.get());
         // Grave Stones
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_FEATURE.get()
                 .configured(NoneFeatureConfiguration.INSTANCE)

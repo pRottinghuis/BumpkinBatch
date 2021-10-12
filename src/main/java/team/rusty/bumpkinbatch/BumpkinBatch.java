@@ -3,6 +3,7 @@ package team.rusty.bumpkinbatch;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import team.rusty.bumpkinbatch.client.ClientHandler;
@@ -33,4 +34,12 @@ public class BumpkinBatch {
             ClientHandler.register();
         }
     }
+
+    public static void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            BStructures.configureStructures();
+
+        });
+    }
+
 }

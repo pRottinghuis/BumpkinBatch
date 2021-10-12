@@ -1,11 +1,11 @@
 {
-  "name": "bumpkinbatch:grave_yard/pool",
+  "name": "bumpkinbatch:carving_station/pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "bumpkinbatch:grave_yard",
+        "location": "bumpkinbatch:carving_station",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

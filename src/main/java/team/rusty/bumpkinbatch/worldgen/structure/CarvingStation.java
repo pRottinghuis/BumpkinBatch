@@ -84,7 +84,7 @@ public class CarvingStation extends StructureFeature<NoneFeatureConfiguration> {
                     registryAccess,
                     // Creates JigsawConfiguration from specified resourcelocation.
                     new JigsawConfiguration(() -> registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-                            .get(new ResourceLocation(BumpkinBatch.ID, "grave_yard/pool")),
+                            .get(new ResourceLocation(BumpkinBatch.ID, "carving_station/pool")),
                             10), // how many pieces outward from center can structure pieces spawn. Irrelevant for this structure as it is a 1 piece anyways.
                     PoolElementStructurePiece::new,
                     chunkGenerator,

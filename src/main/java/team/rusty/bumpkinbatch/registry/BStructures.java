@@ -12,12 +12,19 @@ import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import team.rusty.bumpkinbatch.BumpkinBatch;
+import team.rusty.bumpkinbatch.worldgen.BiomeDefaults;
+import team.rusty.bumpkinbatch.worldgen.structure.CarvingStation;
 
 import java.util.function.Supplier;
 
 public class BStructures {
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, BumpkinBatch.ID);
 
+    public static final RegistryObject<CarvingStation> CARVING_STATION = STRUCTURES.register("carving_station", CarvingStation::new);
+
+    public static void configureStructures() {
+        configureStructure(CARVING_STATION, BiomeDefaults.CARVING_STATION_CONFIGURED, true, 1, 1, 0x224df8);
+    }
     /**
      * Registers the ConfiguredStructure and configures spacing settings for your structure.
      *
@@ -45,4 +52,4 @@ public class BStructures {
         StructureSettings.DEFAULTS = ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration>builder().putAll(StructureSettings.DEFAULTS).put(structure.get(), config).build();
     }
 }
-}
+
