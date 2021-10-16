@@ -1,4 +1,4 @@
-package team.rusty.util.structure;
+package team.rusty.util.worldgen.structure;
 
 import com.google.common.base.Suppliers;
 import net.minecraft.core.BlockPos;

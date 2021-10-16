@@ -1,4 +1,4 @@
-package team.rusty.util.structure;
+package team.rusty.util.worldgen.structure;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.Registry;
