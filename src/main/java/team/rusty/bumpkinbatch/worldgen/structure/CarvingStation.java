@@ -24,23 +24,14 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import team.rusty.bumpkinbatch.BumpkinBatch;
+import team.rusty.util.worldgen.structure.SimpleStructure;
 
 import java.util.Random;
 
-public class CarvingStation extends StructureFeature<NoneFeatureConfiguration> {
-
-    public CarvingStation() {
-        super(NoneFeatureConfiguration.CODEC);
-    }
-
+public class CarvingStation extends SimpleStructure {
     @Override
     public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
         return CarvingStation.FeatureStart::new;
-    }
-
-    @Override
-    public GenerationStep.Decoration step() {
-        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
     @Override
