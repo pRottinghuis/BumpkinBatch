@@ -3,6 +3,7 @@ package team.rusty.bumpkinbatch.data;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import team.rusty.bumpkinbatch.BumpkinBatch;
+import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BItems;
 
 public class BLanguageProvider extends LanguageProvider {
@@ -21,6 +22,8 @@ public class BLanguageProvider extends LanguageProvider {
         addItem(BItems.CREEPER_STICK, "Creeper Stick");
         // Spawn egg
         addItem(BItems.REAPER_SPAWN_EGG, "Reaper Spawn Egg");
+
+        addEntityType(BEntities.REAPER, "Reaper");
 
         // Biome
         add("biome.bumpkinbatch.pumpkin_patch", "Pumpkin Patch");

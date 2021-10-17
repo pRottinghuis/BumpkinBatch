@@ -17,6 +17,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.AbstractSkeleton;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -29,10 +30,15 @@ import java.util.Map;
 public class ReaperEntity extends AbstractSkeleton {
     public ReaperEntity(EntityType<? extends AbstractSkeleton> entityType, Level level) {
         super(entityType, level);
+
+        xpReward = 15;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MOVEMENT_SPEED, 0.25);
+        return Monster.createMonsterAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.25)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 0.4)
+                .add(Attributes.MAX_HEALTH, 50.0);
     }
 
     @Override
@@ -42,7 +48,7 @@ public class ReaperEntity extends AbstractSkeleton {
 
     protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
         // Make the sword wood if you're on peaceful
-        ItemStack stack = difficulty.getDifficulty() == Difficulty.PEACEFUL ? new ItemStack(Items.WOODEN_SWORD) : new ItemStack(Items.IRON_SWORD);
+        ItemStack stack = difficulty.getDifficulty() == Difficulty.EASY ? new ItemStack(Items.WOODEN_SWORD) : new ItemStack(Items.IRON_SWORD);
 
         switch (difficulty.getDifficulty()) {
             // Sharpness 5 Unbreaking 3 Knockback 1

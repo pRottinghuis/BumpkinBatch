@@ -29,6 +29,6 @@ public class BWorldGen {
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> GRAVESTONE_FEATURE = FEATURES.register("gravestone", () -> new GraveStoneFeature(NoneFeatureConfiguration.CODEC));
 
     /** Structures */
-    public static final RegistryObject<SimpleStructure> CARVING_STATION = STRUCTURES.register("carving_station", CarvingStation::new, SimpleStructure::configured, true, 16, 8, 0x69f33d);
-    public static final RegistryObject<SimpleStructure> SPIDER_NEST = STRUCTURES.register("spider_nest", CarvingStation::new, SimpleStructure::configured, true, 12, 4, 0x34f22a);
+    public static final RegistryObject<SimpleStructure> CARVING_STATION = STRUCTURES.register("carving_station", CarvingStation::new, SimpleStructure::configured, true, 12, 4, 0x69f33d);
+    public static final RegistryObject<SimpleStructure> SPIDER_NEST = STRUCTURES.register("spider_nest", CarvingStation::new, SimpleStructure::configured, true, 8, 2, 0x34f22a);
 }

@@ -87,7 +87,7 @@ public class BLootTableProvider extends LootTableProvider {
                         .add(LootItem.lootTableItem(Items.BONE)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
                                 .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
-                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                .withPool(LootPool.lootPool().setRolls(UniformGenerator.between(0.0F, 1.0f))
                         .add(LootItem.lootTableItem(BItems.EAST_TWICKS.get()).setWeight(10))
                         .add(LootItem.lootTableItem(BItems.WEST_TWICKS.get()).setWeight(10))
                         .add(LootItem.lootTableItem(BItems.CREEPER_STICK.get()).setWeight(10))

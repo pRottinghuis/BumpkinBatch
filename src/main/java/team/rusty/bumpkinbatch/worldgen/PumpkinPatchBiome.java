@@ -118,6 +118,6 @@ public class PumpkinPatchBiome extends AbstractBiome {
 
     @Override
     public List<SpawnEntry> getSpawnEntries() {
-        return List.of(SpawnEntry.of(BiomeManager.BiomeType.WARM, 1));
+        return List.of(SpawnEntry.of(BiomeManager.BiomeType.WARM, 3));
     }
 }
