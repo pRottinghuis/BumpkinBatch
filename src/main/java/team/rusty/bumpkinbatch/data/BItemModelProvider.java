@@ -20,7 +20,7 @@ public class BItemModelProvider extends ItemModelProvider {
         candyTextures(BItems.WEST_TWICKS);
         candyTextures(BItems.ORE_O);
         candyTextures(BItems.GUMMY_BOARS);
-        candyTextures(BItems.CREEPER_CRACKS);
+        candyTextures(BItems.CREEPER_STICK);
     }
 
     public void candyTextures(RegistryObject<Item> item) {

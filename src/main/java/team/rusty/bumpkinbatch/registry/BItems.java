@@ -14,7 +14,7 @@ public class BItems {
     public static final RegistryObject<Item> WEST_TWICKS = ITEMS.register("west_twicks", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.WEST_TWICKS)));
     public static final RegistryObject<Item> ORE_O = ITEMS.register("ore_o", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.ORE_O)));
     public static final RegistryObject<Item> GUMMY_BOARS = ITEMS.register("gummy_boars", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.GUMMY_BOARS)));
-    public static final RegistryObject<Item> CREEPER_CRACKS = ITEMS.register("creeper_cracks", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.CREEPER_CRACKS)));
+    public static final RegistryObject<Item> CREEPER_STICK = ITEMS.register("creeper_stick", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.CREEPER_STICK)));
 
 
     // Swiftness - Ore - oes
