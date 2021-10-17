@@ -10,8 +10,7 @@ import team.rusty.bumpkinbatch.client.ClientHandler;
 import team.rusty.bumpkinbatch.registry.BBlocks;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BItems;
-import team.rusty.bumpkinbatch.registry.BStructures;
-import team.rusty.bumpkinbatch.worldgen.BWorldGen;
+import team.rusty.bumpkinbatch.registry.BWorldGen;
 
 @Mod(BumpkinBatch.ID)
 public class BumpkinBatch {
@@ -25,8 +24,7 @@ public class BumpkinBatch {
         BWorldGen.BIOMES.register(mod);
         BEntities.ENTITIES.register(mod);
         BWorldGen.FEATURES.register(mod);
-        BStructures.STRUCTURES.register(mod);
-
+        BWorldGen.STRUCTURES.register(mod);
 
         mod.addListener(BEntities::addEntityAttribs);
 
@@ -34,12 +32,4 @@ public class BumpkinBatch {
             ClientHandler.register();
         }
     }
-
-    public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            BStructures.configureStructures();
-
-        });
-    }
-
 }

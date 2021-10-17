@@ -4,7 +4,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import team.rusty.bumpkinbatch.BumpkinBatch;
 import team.rusty.bumpkinbatch.registry.BItems;
-import team.rusty.bumpkinbatch.worldgen.BWorldGen;
+import team.rusty.bumpkinbatch.registry.BWorldGen;
 
 public class BLanguageProvider extends LanguageProvider {
     public BLanguageProvider(DataGenerator gen) {

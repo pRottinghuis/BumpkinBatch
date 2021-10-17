@@ -3,8 +3,6 @@ package team.rusty.bumpkinbatch.worldgen;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.util.valueproviders.ConstantInt;
-import net.minecraft.world.level.FoliageColor;
-import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -22,10 +20,9 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import team.rusty.bumpkinbatch.registry.BWorldGen;
 import team.rusty.util.worldgen.biome.AbstractBiome;
 
 import java.util.List;
@@ -64,7 +61,7 @@ public class PumpkinPatchBiome extends AbstractBiome {
         generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
 
         // carving stations
-        generation.addStructureStart(BiomeDefaults.CARVING_STATION_CONFIGURED.get());
+        generation.addStructureStart(BWorldGen.CARVING_STATION.get().configured());
         // Grave Stones
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_FEATURE.get()
                 .configured(NoneFeatureConfiguration.INSTANCE)
