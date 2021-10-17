@@ -21,8 +21,8 @@ public class BumpkinBatch {
 
         BBlocks.BLOCKS.register(mod);
         BItems.ITEMS.register(mod);
-        BWorldGen.BIOMES.register(mod);
         BEntities.ENTITIES.register(mod);
+        BWorldGen.BIOMES.register(mod);
         BWorldGen.FEATURES.register(mod);
         BWorldGen.STRUCTURES.register(mod);
 
