@@ -21,6 +21,8 @@ public class BItemModelProvider extends ItemModelProvider {
         candyTextures(BItems.ORE_O);
         candyTextures(BItems.GUMMY_BOARS);
         candyTextures(BItems.CREEPER_STICK);
+
+        withExistingParent(BItems.REAPER_SPAWN_EGG.getId().getPath(), new ResourceLocation("item/template_spawn_egg"));
     }
 
     public void candyTextures(RegistryObject<Item> item) {

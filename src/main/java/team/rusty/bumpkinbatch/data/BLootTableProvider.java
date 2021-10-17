@@ -8,6 +8,7 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.BiasedToBottomInt;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
@@ -15,12 +16,15 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import team.rusty.bumpkinbatch.BumpkinBatch;
 import team.rusty.bumpkinbatch.registry.BItems;
 import team.rusty.bumpkinbatch.worldgen.structure.HalloweenStructureElement;
 
@@ -32,7 +36,7 @@ public class BLootTableProvider extends LootTableProvider {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
     private final DataGenerator generator;
-    private final Map<Block, LootTable.Builder> blockTables = Maps.newHashMap();
+    private final Map<Block, LootTable.Builder> blockTables = new HashMap<>();
 
     public BLootTableProvider(DataGenerator generator) {
         super(generator);
@@ -50,16 +54,58 @@ public class BLootTableProvider extends LootTableProvider {
             namespacedTables.put(entry.getKey().getLootTable(), entry.getValue().setParamSet(LootContextParamSets.BLOCK).build());
         }
 
-        // Rottinghuis I need you to finish this
+        // Candy chest loot
         namespacedTables.put(HalloweenStructureElement.CANDY_CHEST, new LootTable.Builder()
                 .withPool(LootPool.lootPool()
                         .setRolls(UniformGenerator.between(2.0f, 8.0f))
                         .add(LootItem.lootTableItem(Items.COOKIE).setWeight(15)
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
                         .add(LootItem.lootTableItem(BItems.GUMMY_BOARS.get()).setWeight(15))
-                        .add(LootItem.lootTableItem(BItems.ORE_O.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(BItems.CREEPER_STICK.get()).setWeight(10)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0f, 3.0f))))
+                        .add(LootItem.lootTableItem(BItems.ORE_O.get()).setWeight(10)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+                        .add(LootItem.lootTableItem(BItems.EAST_TWICKS.get()).setWeight(16))
+                        .add(LootItem.lootTableItem(BItems.WEST_TWICKS.get()).setWeight(14))
+                        .add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(5))
+                        .add(LootItem.lootTableItem(Items.COAL).setWeight(20)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))
+                        .add(LootItem.lootTableItem(Items.EMERALD).setWeight(5)))
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0f))
+                        .add(LootItem.lootTableItem(Items.DIAMOND)))
+                .setParamSet(LootContextParamSets.CHEST).build());
 
-                ).setParamSet(LootContextParamSets.CHEST).build());
+        // Reaper loot
+        namespacedTables.put(new ResourceLocation(BumpkinBatch.ID, "entities/reaper"), new LootTable.Builder()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(Items.LEATHER)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 2.0f)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.BONE)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(BItems.EAST_TWICKS.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(BItems.WEST_TWICKS.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(BItems.CREEPER_STICK.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(BItems.ORE_O.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(BItems.GUMMY_BOARS.get()).setWeight(10))
+                        .add(LootItem.lootTableItem(Items.GOLDEN_APPLE).setWeight(5)))
+                .setParamSet(LootContextParamSets.ENTITY).build());
+
+        LootTable.lootTable()
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.ARROW)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))))
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(Items.BONE)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F)))));
 
         // Igloo exampe loot table
         //LootTable.lootTable()

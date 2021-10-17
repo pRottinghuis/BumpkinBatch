@@ -2,6 +2,7 @@ package team.rusty.bumpkinbatch.registry;
 
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -16,6 +17,7 @@ public class BItems {
     public static final RegistryObject<Item> GUMMY_BOARS = ITEMS.register("gummy_boars", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.GUMMY_BOARS)));
     public static final RegistryObject<Item> CREEPER_STICK = ITEMS.register("creeper_stick", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_FOOD).food(BFoods.CREEPER_STICK)));
 
+    public static final RegistryObject<Item> REAPER_SPAWN_EGG = ITEMS.register("reaper_spawn_egg", () -> new ForgeSpawnEggItem(BEntities.REAPER, 0xd6d6d6, 0x8c5b3f, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
     // Swiftness - Ore - oes
     // Night Vision - Gummy Boars

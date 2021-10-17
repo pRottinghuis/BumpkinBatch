@@ -3,6 +3,7 @@ package team.rusty.bumpkinbatch.worldgen;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.Features;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -22,6 +23,7 @@ import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDeco
 import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
+import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BWorldGen;
 import team.rusty.util.worldgen.biome.AbstractBiome;
 
@@ -110,6 +112,8 @@ public class PumpkinPatchBiome extends AbstractBiome {
 
         BiomeDefaultFeatures.monsters(spawns, 19, 1, 100);
         BiomeDefaultFeatures.commonSpawns(spawns);
+
+        spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BEntities.REAPER.get(), 5, 1, 1));
     }
 
     @Override

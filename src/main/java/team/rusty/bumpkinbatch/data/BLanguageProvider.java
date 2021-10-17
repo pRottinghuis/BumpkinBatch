@@ -4,8 +4,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 import team.rusty.bumpkinbatch.BumpkinBatch;
 import team.rusty.bumpkinbatch.registry.BItems;
-import team.rusty.bumpkinbatch.registry.BWorldGen;
-import team.rusty.util.worldgen.biome.AbstractBiomeRegistry;
 
 public class BLanguageProvider extends LanguageProvider {
     public BLanguageProvider(DataGenerator gen) {
@@ -15,14 +13,16 @@ public class BLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
 
-        //Candies
+        // Candies
         addItem(BItems.EAST_TWICKS, "East Twicks");
         addItem(BItems.WEST_TWICKS, "West Twicks");
         addItem(BItems.ORE_O, "Ore-O");
         addItem(BItems.GUMMY_BOARS, "Gummy Boars");
-        addItem(BItems.CREEPER_STICK, "Creeper Cracks");
+        addItem(BItems.CREEPER_STICK, "Creeper Stick");
+        // Spawn egg
+        addItem(BItems.REAPER_SPAWN_EGG, "Reaper Spawn Egg");
 
-        //Biome
+        // Biome
         add("biome.bumpkinbatch.pumpkin_patch", "Pumpkin Patch");
     }
 }
