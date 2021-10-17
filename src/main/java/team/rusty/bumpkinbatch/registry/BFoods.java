@@ -9,10 +9,9 @@ public class BFoods {
 
     public static final FoodProperties EAST_TWICKS = makeCandy(MobEffects.MOVEMENT_SPEED);
     public static final FoodProperties WEST_TWICKS = makeCandy(MobEffects.MOVEMENT_SLOWDOWN);
-
     public static final FoodProperties ORE_O = makeCandy(MobEffects.DIG_SPEED);
-    public static final FoodProperties GUMMY_BOARS = makeCandy(MobEffects.NIGHT_VISION);
-    public static final FoodProperties CREEPER_CRACKS = makeCandy(MobEffects.DAMAGE_BOOST);
+    public static final FoodProperties GUMMY_BOARS = makeCandy(MobEffects.DAMAGE_BOOST);
+    public static final FoodProperties CREEPER_CRACKS = makeCandy(MobEffects.NIGHT_VISION);
 
 
 
