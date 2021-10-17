@@ -68,16 +68,15 @@ public class CarvingStation extends SimpleStructure {
         public void generatePieces(RegistryAccess registryAccess, ChunkGenerator chunkGenerator, StructureManager manager, ChunkPos pos, Biome biome, NoneFeatureConfiguration noneConfig, LevelHeightAccessor heightAccessor) {
             var random = new Random(worldSeed + pos.hashCode());
 
-
             BlockPos centerPos = new BlockPos(pos.getMinBlockX() + random.nextInt(15), 0, pos.getMinBlockZ() + random.nextInt(15));
 
             JigsawPlacement.addPieces(
                     registryAccess,
                     // Creates JigsawConfiguration from specified resourcelocation.
                     new JigsawConfiguration(() -> registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-                            .get(new ResourceLocation(BumpkinBatch.ID, "carving_station/pool")),
+                            .get(new ResourceLocation(getFeature().getFeatureName() + "/pool")),
                             10), // how many pieces outward from center can structure pieces spawn. Irrelevant for this structure as it is a 1 piece anyways.
-                    PoolElementStructurePiece::new,
+                    (m, element, p, gld, r, bb) -> new PoolElementStructurePiece(m, HalloweenStructureElement.create(element), p, gld, r, bb),
                     chunkGenerator,
                     manager,
                     centerPos,
@@ -87,10 +86,10 @@ public class CarvingStation extends SimpleStructure {
                     true, // true: jigsaw placement gets heightmap pos in middle of structure bounding box
                     heightAccessor);
 
-            // Adjusts hight of all pieces.
-            this.pieces.forEach(piece -> piece.move(0, 0, 0));
+            // Adjusts height of all pieces.
+            //this.pieces.forEach(piece -> piece.move(0, -1, 0));
             // Adjusts height of bounding box
-            this.pieces.forEach(piece -> piece.getBoundingBox().move(0, 1, 0));
+            //this.pieces.forEach(piece -> piece.getBoundingBox().move(0, 1, 0));
 
             // Centers structure on
             Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
