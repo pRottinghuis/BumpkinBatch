@@ -73,15 +73,13 @@ public class HalloweenStructureElement extends SinglePoolElement {
 
                 if ("candy_chest".equals(marker) || "chest".equals(marker)) {
                     var te = level.getBlockEntity(markerPos.below());
-                    var state = level.getBlockState(markerPos.below());
                     level.setBlock(markerPos, Blocks.AIR.defaultBlockState(), 3);
 
                     if (te instanceof ChestBlockEntity container) {
                         container.setLootTable(CANDY_CHEST, random.nextLong());
                     }
-                } else if ("spawner".equals(marker)) {
-                    level.setBlock(markerPos, Blocks.WET_SPONGE.defaultBlockState(), 3);
-                    level.setBlock(markerPos.below(), Blocks.SPAWNER.defaultBlockState(), 3);
+                } else if ("spider_spawner".equals(marker)) {
+                    level.setBlock(markerPos, Blocks.COBWEB.defaultBlockState(), 3);
 
                     var te = level.getBlockEntity(markerPos.below());
 
