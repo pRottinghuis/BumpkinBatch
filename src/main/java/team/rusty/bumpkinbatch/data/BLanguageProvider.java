@@ -19,7 +19,7 @@ public class BLanguageProvider extends LanguageProvider {
         addItem(BItems.WEST_TWICKS, "West Twicks");
         addItem(BItems.ORE_O, "Ore-O");
         addItem(BItems.GUMMY_BOARS, "Gummy Boars");
-        addItem(BItems.CREEPER_CRACKS, "Creeper Cracks");
+        addItem(BItems.CREEPER_STICK, "Creeper Cracks");
 
         //Biome
         add(BWorldGen.PUMPKIN_PATCH.toString(), "Pumpkin Patch");
