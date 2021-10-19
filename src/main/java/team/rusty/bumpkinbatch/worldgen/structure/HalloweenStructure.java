@@ -12,7 +12,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -23,15 +22,14 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import team.rusty.bumpkinbatch.BumpkinBatch;
 import team.rusty.util.worldgen.structure.SimpleStructure;
 
 import java.util.Random;
 
-public class CarvingStation extends SimpleStructure {
+public class HalloweenStructure extends SimpleStructure {
     @Override
     public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
-        return CarvingStation.FeatureStart::new;
+        return HalloweenStructure.FeatureStart::new;
     }
 
     @Override

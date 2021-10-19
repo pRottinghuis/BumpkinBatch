@@ -59,12 +59,19 @@ public class PumpkinPatchBiome extends AbstractBiome {
         BiomeDefaultFeatures.addDefaultLakes(generation);
         BiomeDefaultFeatures.addDefaultSprings(generation);
         BiomeDefaultFeatures.addDefaultMonsterRoom(generation);
+        BiomeDefaultFeatures.addPlainGrass(generation);
+        BiomeDefaultFeatures.addDefaultGrass(generation);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(generation);
+        BiomeDefaultFeatures.addSurfaceFreezing(generation);
+
 
         generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
 
         // carving stations
         generation.addStructureStart(BWorldGen.CARVING_STATION.get().configured());
         generation.addStructureStart(BWorldGen.SPIDER_NEST.get().configured());
+        generation.addStructureStart(BWorldGen.HAUNTED_HOUSE.get().configured());
+
         // Grave Stones
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_FEATURE.get()
                 .configured(NoneFeatureConfiguration.INSTANCE)
