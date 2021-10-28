@@ -15,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import team.rusty.bumpkinbatch.BumpkinBatch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +78,10 @@ public final class SimpleStructureRegistry {
 
             // Add structure placement settings to world instead of to the immutable default map
             for (var entry : deferredRegister.getEntries()) {
-                configurations.put(entry.get(), structureInfo.get(entry.getId()).config());
+                // Fix in case world type has immutable configurations (like flat world)
+                try {
+                    configurations.put(entry.get(), structureInfo.get(entry.getId()).config());
+                } catch (UnsupportedOperationException ignored) { }
             }
         }
     }
