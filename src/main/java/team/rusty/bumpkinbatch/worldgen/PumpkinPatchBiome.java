@@ -37,7 +37,7 @@ public class PumpkinPatchBiome extends AbstractBiome {
         precipitation = Biome.Precipitation.RAIN;
         category = Biome.BiomeCategory.PLAINS;
         depth = 0.1f;
-        scale = 0.1f;
+        scale = 0.05f;
         temperature = 0.9f;
         downfall = 0.5f;
 

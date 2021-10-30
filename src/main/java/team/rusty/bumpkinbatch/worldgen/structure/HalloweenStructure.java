@@ -93,9 +93,13 @@ public class HalloweenStructure extends SimpleStructure {
             Vec3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = centerPos.getX() - structureCenter.getX();
             int zOffset = centerPos.getZ() - structureCenter.getZ();
-
-            for (StructurePiece structurePiece : this.pieces){
-                structurePiece.move(xOffset, 0, zOffset);
+            for (StructurePiece structurePiece : this.pieces) {
+                if (getFeature().getFeatureName().equals("bumpkinbatch:haunted_house")) {
+                    structurePiece.move(xOffset, -6, zOffset);
+                    this.pieces.forEach(piece -> piece.getBoundingBox().move(0, 6, 0));
+                } else {
+                    structurePiece.move(xOffset, 0, zOffset);
+                }
             }
         }
     }

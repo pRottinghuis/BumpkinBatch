@@ -9,7 +9,7 @@ displayName="Bumpkin Batch"
 credits="The exaggerated swagger of the Rusty Team"
 authors="bobertrd, cfrishausen, TheDarkColour"
 description='''
-Entry in the SpookyJam 2021
+Entry in the SpookyJam 2021. New pumpkin patch biome. At night it will make your bones rattle...
 '''
 [[dependencies.bumpkinbatch]]
     modId="forge"
