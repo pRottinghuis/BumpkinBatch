@@ -4,7 +4,6 @@ import com.mojang.datafixers.util.Either;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.state.properties.StructureMode;
-import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.tileentity.MobSpawnerTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -64,14 +63,7 @@ public class HalloweenStructureElement extends SingleJigsawPiece {
                 String marker = info.nbt.getString("metadata");
                 BlockPos markerPos = info.pos;
 
-                if ("candy_chest".equals(marker) || "chest".equals(marker)) {
-                    TileEntity te = level.getBlockEntity(markerPos.below());
-                    level.setBlock(markerPos, Blocks.AIR.defaultBlockState(), 3);
-
-                    if (te instanceof ChestTileEntity) {
-                        ((ChestTileEntity) te).setLootTable(HalloweenStructure.CANDY_CHEST, random.nextLong());
-                    }
-                } else if ("spider_spawner".equals(marker)) {
+                if ("spider_spawner".equals(marker)) {
                     level.setBlock(markerPos, Blocks.COBWEB.defaultBlockState(), 3);
 
                     TileEntity te = level.getBlockEntity(markerPos.below());
