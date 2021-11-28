@@ -1,20 +1,17 @@
 package team.rusty.bumpkinbatch.client.renderer;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.BipedRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.util.ResourceLocation;
 import team.rusty.bumpkinbatch.BumpkinBatch;
 import team.rusty.bumpkinbatch.client.model.ReaperModel;
 import team.rusty.bumpkinbatch.entity.ReaperEntity;
 
-public class ReaperRenderer extends HumanoidMobRenderer<ReaperEntity, ReaperModel> {
-
+public class ReaperRenderer extends BipedRenderer<ReaperEntity, ReaperModel> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(BumpkinBatch.ID, "textures/entity/reaper.png");
 
-    public ReaperRenderer(EntityRendererProvider.Context context) {
-        super(context, new ReaperModel(Minecraft.getInstance().getEntityModels().bakeLayer(ReaperModel.LAYER)), 0.7F);
+    public ReaperRenderer(EntityRendererManager manager) {
+        super(manager, new ReaperModel(), 0.7F);
     }
 
     @Override

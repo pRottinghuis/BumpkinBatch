@@ -1,41 +1,38 @@
 package team.rusty.bumpkinbatch.entity;
 
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
+import com.google.common.collect.ImmutableMap;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.AbstractSkeletonEntity;
+import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.AbstractSkeleton;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.World;
 
-import java.util.Map;
-
-public class ReaperEntity extends AbstractSkeleton {
-    public ReaperEntity(EntityType<? extends AbstractSkeleton> entityType, Level level) {
+public class ReaperEntity extends AbstractSkeletonEntity {
+    public ReaperEntity(EntityType<? extends AbstractSkeletonEntity> entityType, World level) {
         super(entityType, level);
 
         xpReward = 15;
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes()
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return MonsterEntity.createMonsterAttributes()
                 .add(Attributes.MOVEMENT_SPEED, 0.25)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 0.4)
                 .add(Attributes.MAX_HEALTH, 50.0);
@@ -50,26 +47,32 @@ public class ReaperEntity extends AbstractSkeleton {
         // Make the sword wood if you're on peaceful
         ItemStack stack = difficulty.getDifficulty() == Difficulty.EASY ? new ItemStack(Items.WOODEN_SWORD) : new ItemStack(Items.IRON_SWORD);
 
+        // Sharpness 5 Unbreaking 3 Knockback 1
+        // Sharpness 2-4 Unbreaking 1-3
+        // Sharpness 1-2 Unbreaking 1-2
         switch (difficulty.getDifficulty()) {
-            // Sharpness 5 Unbreaking 3 Knockback 1
-            case HARD -> EnchantmentHelper.setEnchantments(Map.of(
-                    Enchantments.SHARPNESS, 5,
-                    Enchantments.UNBREAKING, 3,
-                    Enchantments.KNOCKBACK, 1
-            ), stack);
-            // Sharpness 2-4 Unbreaking 1-3
-            case NORMAL -> EnchantmentHelper.setEnchantments(Map.of(
-                    Enchantments.SHARPNESS, random.nextFloat() < difficulty.getSpecialMultiplier() ? 4 : 2,
-                    Enchantments.UNBREAKING, 1 + random.nextInt(3)
-            ), stack);
-            // Sharpness 1-2 Unbreaking 1-2
-            default -> EnchantmentHelper.setEnchantments(Map.of(
-                    Enchantments.SHARPNESS, random.nextFloat() < difficulty.getSpecialMultiplier() ? 2 : 1,
-                    Enchantments.UNBREAKING, 1 + random.nextInt(2)
-            ), stack);
+            case HARD:
+                EnchantmentHelper.setEnchantments(ImmutableMap.of(
+                        Enchantments.SHARPNESS, 5,
+                        Enchantments.UNBREAKING, 3,
+                        Enchantments.KNOCKBACK, 1
+                ), stack);
+                break;
+            case NORMAL:
+                EnchantmentHelper.setEnchantments(ImmutableMap.of(
+                        Enchantments.SHARPNESS, random.nextFloat() < difficulty.getSpecialMultiplier() ? 4 : 2,
+                        Enchantments.UNBREAKING, 1 + random.nextInt(3)
+                ), stack);
+                break;
+            default:
+                EnchantmentHelper.setEnchantments(ImmutableMap.of(
+                        Enchantments.SHARPNESS, random.nextFloat() < difficulty.getSpecialMultiplier() ? 2 : 1,
+                        Enchantments.UNBREAKING, 1 + random.nextInt(2)
+                ), stack);
+                break;
         }
 
-        setItemSlot(EquipmentSlot.MAINHAND, stack);
+        setItemSlot(EquipmentSlotType.MAINHAND, stack);
     }
 
     @Override
@@ -77,8 +80,10 @@ public class ReaperEntity extends AbstractSkeleton {
         if (!super.doHurtTarget(target)) {
             return false;
         } else {
-            if (target instanceof LivingEntity living) {
-                living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 30), this);
+            if (target instanceof LivingEntity) {
+                LivingEntity living = (LivingEntity) target;
+
+                living.addEffect(new EffectInstance(Effects.BLINDNESS, 30));
             }
 
             return true;
@@ -86,7 +91,7 @@ public class ReaperEntity extends AbstractSkeleton {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
         return 2.7f;
     }
 

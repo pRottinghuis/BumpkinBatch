@@ -1,37 +1,44 @@
 package team.rusty.bumpkinbatch.worldgen.feature;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ISeedReader;
+import net.minecraft.world.gen.ChunkGenerator;
+import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.placement.Placement;
 
-public class CrossFeature extends Feature<BlockStateConfiguration> {
-    public CrossFeature(Codec<BlockStateConfiguration> codec) {
+import java.util.Random;
+
+/**
+ * @author TheDarkColour
+ */
+public class CrossFeature extends Feature<BlockStateFeatureConfig> {
+    public CrossFeature(Codec<BlockStateFeatureConfig> codec) {
         super(codec);
     }
 
+    /**
+     * @param level World access
+     * @param generator unused
+     * @param random unused
+     * @param pos with {@link Placement#SQUARE} and {@link Placement#HEIGHTMAP} feature decorators, this position is the block above ground level.
+     * @param config get the block type from the config, used for the entire structure
+     * @return I don't know if it really matters what you return here
+     */
     @Override
-    public boolean place(FeaturePlaceContext<BlockStateConfiguration> context) {
-
-        var level = context.level();
-        var config = context.config();
-        // get the block type from the config
-        // you can use your own config if you want more states to specify,
-        // but the cross uses a single state for the entire structure
-        var state = config.state;
-        // with SQUARE and HEIGHTMAP feature decorators,
-        // this position is the block above ground level.
-        var pos = context.origin();
+    public boolean place(ISeedReader level, ChunkGenerator generator, Random random, BlockPos pos, BlockStateFeatureConfig config) {
+        BlockState state = config.state;
 
         // don't spawn in the water or any other non-solid (non occluding) block
         if (!level.getBlockState(pos.below()).canOcclude()) return false;
 
         // Cursor to place blocks
-        var mutable = pos.mutable();
+        BlockPos.Mutable mutable = pos.mutable();
 
         // Place five blocks...
-        for (var i = 0; i < 5; ++i) {
+        for (int i = 0; i < 5; ++i) {
             // Place a block first...
             setBlock(level, mutable, state);
             // ...then move up the cursor

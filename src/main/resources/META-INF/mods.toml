@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[37,)" # For spawn eggs
+loaderVersion="[36,)"
 license="All rights reserved"
 
 [[mods]]
@@ -14,12 +14,12 @@ Entry in the SpookyJam 2021. New pumpkin patch biome. At night it will make your
 [[dependencies.bumpkinbatch]]
     modId="forge"
     mandatory=true
-    versionRange="[37.0.84,)"
+    versionRange="[36.2.17,)" # For spawn eggs
     ordering="NONE"
     side="BOTH"
 [[dependencies.bumpkinbatch]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.17.1,1.18)"
+    versionRange="[1.16.5]" # has to be 1.16.5 because forge spawn eggs were not added in older versions
     ordering="NONE"
     side="BOTH"

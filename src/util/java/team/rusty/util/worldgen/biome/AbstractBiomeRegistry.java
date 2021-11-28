@@ -2,14 +2,14 @@ package team.rusty.util.worldgen.biome;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.minecraft.core.Registry;
-import net.minecraft.data.worldgen.SurfaceBuilders;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeAmbience;
+import net.minecraft.world.biome.BiomeGenerationSettings;
+import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilders;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
@@ -25,7 +25,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public final class AbstractBiomeRegistry {
     /** Dummy builder that gets changed later */
-    private static final Biome.BiomeBuilder DUMMY = new Biome.BiomeBuilder().precipitation(Biome.Precipitation.NONE).biomeCategory(Biome.BiomeCategory.PLAINS).depth(0.1f).scale(0.1f).temperature(0.1f).downfall(0.1f).specialEffects(new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).mobSpawnSettings(new MobSpawnSettings.Builder().build()).generationSettings(new BiomeGenerationSettings.Builder().surfaceBuilder(SurfaceBuilders.BADLANDS).build());
+    private static final Biome.Builder DUMMY = new Biome.Builder().precipitation(Biome.RainType.NONE).biomeCategory(Biome.Category.PLAINS).depth(0.1f).scale(0.1f).temperature(0.1f).downfall(0.1f).specialEffects(new BiomeAmbience.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).mobSpawnSettings(new MobSpawnInfo.Builder().build()).generationSettings(new BiomeGenerationSettings.Builder().surfaceBuilder(ConfiguredSurfaceBuilders.BADLANDS).build());
 
     /** Biome deferred register */
     private final DeferredRegister<Biome> deferredRegister;
@@ -57,7 +57,7 @@ public final class AbstractBiomeRegistry {
         // Put a dummy biome in minecraft registry
         deferredRegister.register(name, DUMMY::build);
         // Put biome in biome registry
-        var biomeId = new ResourceLocation(modId, name);
+        ResourceLocation biomeId = new ResourceLocation(modId, name);
         biomes.put(biomeId, biome);
 
         // This is what prints out the error messages about missing mobs/features/etc.
@@ -72,15 +72,15 @@ public final class AbstractBiomeRegistry {
      * Replaces all the dummy biomes with the real values set in {@link AbstractBiome#configure}
      */
     private void applyBiomes(BiomeLoadingEvent event) {
-        var biomeId = event.getName();
-        var biome = biomes.get(biomeId);
+        ResourceLocation biomeId = event.getName();
+        AbstractBiome biome = biomes.get(biomeId);
 
-        if (biome != null) {
+        if (biome != null && biomeId != null) {
             // Only obtain the key once
             if (!biome.getSpawnEntries().isEmpty()) {
-                var key = ResourceKey.create(Registry.BIOME_REGISTRY, biomeId);
+                RegistryKey<Biome> key = RegistryKey.create(Registry.BIOME_REGISTRY, biomeId);
 
-                for (var entry : biome.getSpawnEntries()) {
+                for (AbstractBiome.SpawnEntry entry : biome.getSpawnEntries()) {
                     BiomeManager.addBiome(entry.type(), new BiomeManager.BiomeEntry(key, entry.weight()));
                 }
             }

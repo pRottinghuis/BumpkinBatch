@@ -3,11 +3,9 @@ package team.rusty.bumpkinbatch;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import team.rusty.bumpkinbatch.client.ClientHandler;
-import team.rusty.bumpkinbatch.registry.BBlocks;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BItems;
 import team.rusty.bumpkinbatch.registry.BWorldGen;
@@ -19,7 +17,6 @@ public class BumpkinBatch {
     public BumpkinBatch() {
         IEventBus mod = FMLJavaModLoadingContext.get().getModEventBus();
 
-        BBlocks.BLOCKS.register(mod);
         BItems.ITEMS.register(mod);
         BEntities.ENTITIES.register(mod);
         BWorldGen.BIOMES.register(mod);

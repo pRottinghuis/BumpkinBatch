@@ -1,10 +1,10 @@
 package team.rusty.util.worldgen.biome;
 
-import net.minecraft.util.Mth;
-import net.minecraft.world.level.biome.AmbientMoodSettings;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeAmbience;
+import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.MoodSoundAmbience;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 
@@ -18,18 +18,18 @@ import java.util.List;
  */
 public abstract class AbstractBiome {
     /** Default biome effects for new biomes */
-    public static final BiomeSpecialEffects DEFAULT_EFFECTS = new BiomeSpecialEffects.Builder().waterColor(4159204).waterFogColor(329011).fogColor(12638463).skyColor(calculateSkyColor(0.7F)).ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS).build();
+    public static final BiomeAmbience DEFAULT_EFFECTS = new BiomeAmbience.Builder().waterColor(4159204).waterFogColor(329011).fogColor(12638463).skyColor(calculateSkyColor(0.7F)).ambientMoodSound(MoodSoundAmbience.LEGACY_CAVE_SETTINGS).build();
 
     /** Vanilla biome category */
-    protected Biome.BiomeCategory category = Biome.BiomeCategory.PLAINS;
+    protected Biome.Category category = Biome.Category.PLAINS;
     /** Negative depth counts as ocean */
     protected float depth = 0.1f;
     /** Vertical stretch */
     protected float scale = 0.1f;
     /** Biome water/sky/fog colors, particles, and music. Basically anything clientside */
-    protected BiomeSpecialEffects effects = DEFAULT_EFFECTS;
+    protected BiomeAmbience effects = DEFAULT_EFFECTS;
     /** Which type of weather effects are displayed when it is raining. */
-    protected Biome.Precipitation precipitation = Biome.Precipitation.RAIN;
+    protected Biome.RainType precipitation = Biome.RainType.RAIN;
     protected Biome.TemperatureModifier tempMod = Biome.TemperatureModifier.NONE;
     /** Affects melting of ice and snow */
     protected float temperature = 0.0f;
@@ -39,14 +39,14 @@ public abstract class AbstractBiome {
     /** Copy + paste from VanillaBiomes */
     public static int calculateSkyColor(float temperature) {
         float f = temperature / 3.0F;
-        f = Mth.clamp(f, -1.0F, 1.0F);
-        return Mth.hsvToRgb(0.62222224F - f * 0.05F, 0.5F + f * 0.1F, 1.0F);
+        f = MathHelper.clamp(f, -1.0F, 1.0F);
+        return MathHelper.hsvToRgb(0.62222224F - f * 0.05F, 0.5F + f * 0.1F, 1.0F);
     }
 
     /**
      * Configure biome properties, add features/structures/carvers, add mob spawns, etc.
      */
-    public abstract void configure(BiomeGenerationSettingsBuilder generation, MobSpawnSettings.Builder spawns);
+    public abstract void configure(BiomeGenerationSettingsBuilder generation, MobSpawnInfo.Builder spawns);
 
     /**
      * @return The spawn configuration of this biome, or empty if the biome should not spawn naturally.
@@ -55,11 +55,11 @@ public abstract class AbstractBiome {
         return Collections.emptyList();
     }
 
-    public Biome.ClimateSettings getClimate() {
-        return new Biome.ClimateSettings(precipitation, temperature, tempMod, downfall);
+    public Biome.Climate getClimate() {
+        return new Biome.Climate(precipitation, temperature, tempMod, downfall);
     }
 
-    public Biome.BiomeCategory getCategory() {
+    public Biome.Category getCategory() {
         return category;
     }
 
@@ -71,13 +71,29 @@ public abstract class AbstractBiome {
         return scale;
     }
 
-    public BiomeSpecialEffects getEffects() {
+    public BiomeAmbience getEffects() {
         return effects;
     }
 
-    public record SpawnEntry(BiomeManager.BiomeType type, int weight) {
+    public static final class SpawnEntry {
+        private final BiomeManager.BiomeType type;
+        private final int weight;
+
+        public SpawnEntry(BiomeManager.BiomeType type, int weight) {
+            this.type = type;
+            this.weight = weight;
+        }
+
         public static SpawnEntry of(BiomeManager.BiomeType type, int weight) {
             return new SpawnEntry(type, weight);
+        }
+
+        public BiomeManager.BiomeType type() {
+            return type;
+        }
+
+        public int weight() {
+            return weight;
         }
     }
 }

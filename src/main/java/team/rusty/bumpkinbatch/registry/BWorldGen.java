@@ -1,9 +1,9 @@
 package team.rusty.bumpkinbatch.registry;
 
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import team.rusty.bumpkinbatch.BumpkinBatch;
@@ -25,8 +25,8 @@ public class BWorldGen {
     public static final AbstractBiome PUMPKIN_PATCH = BIOMES.register("pumpkin_patch", new PumpkinPatchBiome());
 
     /** Features */
-    public static final RegistryObject<Feature<BlockStateConfiguration>> CROSS_FEATURE = FEATURES.register("cross_feature", () -> new CrossFeature(BlockStateConfiguration.CODEC));
-    public static final RegistryObject<Feature<NoneFeatureConfiguration>> GRAVESTONE_FEATURE = FEATURES.register("gravestone", () -> new GraveStoneFeature(NoneFeatureConfiguration.CODEC));
+    public static final RegistryObject<Feature<BlockStateFeatureConfig>> CROSS_FEATURE = FEATURES.register("cross_feature", () -> new CrossFeature(BlockStateFeatureConfig.CODEC));
+    public static final RegistryObject<Feature<NoFeatureConfig>> GRAVESTONE_FEATURE = FEATURES.register("gravestone", () -> new GraveStoneFeature(NoFeatureConfig.CODEC));
 
     /** Structures */
     public static final RegistryObject<SimpleStructure> CARVING_STATION = STRUCTURES.register("carving_station", HalloweenStructure::new, SimpleStructure::configured, true, 12, 4, 0x69f33d);
