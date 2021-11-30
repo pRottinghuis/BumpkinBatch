@@ -6,23 +6,15 @@ import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.StructureFeatureManager;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.entity.ChestBlockEntity;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.properties.StructureMode;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.structures.SinglePoolElement;
 import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
 import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnoreProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.JigsawReplacementProcessor;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -53,7 +45,7 @@ public class HalloweenStructureElement extends SinglePoolElement {
         structureplacesettings.setRotation(p_69108_);
         structureplacesettings.setKnownShape(true);
         structureplacesettings.setIgnoreEntities(false);
-        //structureplacesettings.addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK); // fuck you minecraft
+        //structureplacesettings.addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK); // grrrr
         structureplacesettings.setFinalizeEntities(true);
         if (!p_69110_) {
             structureplacesettings.addProcessor(JigsawReplacementProcessor.INSTANCE);
@@ -71,14 +63,7 @@ public class HalloweenStructureElement extends SinglePoolElement {
                 var marker = info.nbt.getString("metadata");
                 var markerPos = info.pos;
 
-                if ("candy_chest".equals(marker) || "chest".equals(marker)) {
-                    var te = level.getBlockEntity(markerPos.below());
-                    level.setBlock(markerPos, Blocks.AIR.defaultBlockState(), 3);
-
-                    if (te instanceof ChestBlockEntity container) {
-                        container.setLootTable(CANDY_CHEST, random.nextLong());
-                    }
-                } else if ("spider_spawner".equals(marker)) {
+                if ("spider_spawner".equals(marker)) {
                     level.setBlock(markerPos, Blocks.COBWEB.defaultBlockState(), 3);
 
                     var te = level.getBlockEntity(markerPos.below());

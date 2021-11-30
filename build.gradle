@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.1'
+version = '1.4'
 group = 'team.rusty.bumpkinbatch' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'bumpkinbatch'
 
