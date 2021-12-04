@@ -58,20 +58,18 @@ public class HalloweenStructureElement extends SinglePoolElement {
 
     @Override
     public void handleDataMarker(LevelAccessor level, StructureTemplate.StructureBlockInfo info, BlockPos pos, Rotation p_69161_, Random random, BoundingBox p_69163_) {
-        if (info.nbt != null) {
-            if (StructureMode.valueOf(info.nbt.getString("mode")) == StructureMode.DATA) {
-                var marker = info.nbt.getString("metadata");
-                var markerPos = info.pos;
+        if (StructureMode.valueOf(info.nbt.getString("mode")) == StructureMode.DATA) {
+            var marker = info.nbt.getString("metadata");
+            var markerPos = info.pos;
 
-                if ("spider_spawner".equals(marker)) {
-                    level.setBlock(markerPos, Blocks.COBWEB.defaultBlockState(), 3);
+            if ("spider_spawner".equals(marker)) {
+                level.setBlock(markerPos, Blocks.COBWEB.defaultBlockState(), 3);
 
-                    var te = level.getBlockEntity(markerPos.below());
+                var te = level.getBlockEntity(markerPos.below());
 
-                    if (te instanceof SpawnerBlockEntity spawner) {
-                        spawner.getSpawner().setEntityId(random.nextBoolean() ? EntityType.SPIDER : EntityType.CAVE_SPIDER);
-                        spawner.setChanged();
-                    }
+                if (te instanceof SpawnerBlockEntity spawner) {
+                    spawner.getSpawner().setEntityId(random.nextBoolean() ? EntityType.SPIDER : EntityType.CAVE_SPIDER);
+                    spawner.setChanged();
                 }
             }
         }

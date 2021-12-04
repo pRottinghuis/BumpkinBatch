@@ -42,6 +42,8 @@ public class SimpleStructure extends StructureFeature<NoneFeatureConfiguration> 
         return Start::new;
     }
 
+
+
     @Override
     public GenerationStep.Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
