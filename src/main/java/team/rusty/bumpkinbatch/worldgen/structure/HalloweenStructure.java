@@ -1,16 +1,21 @@
 package team.rusty.bumpkinbatch.worldgen.structure;
 
+import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -23,19 +28,30 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
+import team.rusty.bumpkinbatch.BumpkinBatch;
+import team.rusty.bumpkinbatch.entity.ReaperEntity;
+import team.rusty.bumpkinbatch.registry.BEntities;
+import team.rusty.bumpkinbatch.registry.BWorldGen;
 import team.rusty.util.worldgen.structure.SimpleStructure;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-public class HalloweenStructure extends SimpleStructure {
+public class HalloweenStructure extends StructureFeature<JigsawConfiguration> {
+
+    //https://github.com/TelepathicGrunt/StructureTutorialMod/blob/1.18.x-Forge-Jigsaw/src/main/java/com/telepathicgrunt/structuretutorial/structures/RunDownHouseStructure.java
+
+    /*
     @Override
     public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
         return HalloweenStructure.FeatureStart::new;
     }
-    /*
+
     @Override
     protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long seed, WorldgenRandom worldgenRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos2, NoneFeatureConfiguration noneFeatureConfiguration, LevelHeightAccessor levelHeightAccessor) {
         var random = new Random(seed + pos.hashCode());
@@ -68,7 +84,16 @@ public class HalloweenStructure extends SimpleStructure {
                     }
                 },
                 PostPlacementProcessor.NONE);
-        })
+    }
+
+    private static final List<MobSpawnSettings.SpawnerData> STRUCTURE_MONSTERS = ImmutableList.of(
+            new MobSpawnSettings.SpawnerData(BEntities.REAPER.get(), 100, 4, 9)
+    );
+
+    private static void createPiecesGenerator(final StructureSpawnListGatherEvent event) {
+        if (event.getStructure() == BWorldGen.HAUNTED_HOUSE.get()) {
+            event.addEntitySpawns(MobCategory.MONSTER, STRUCTURE_MONSTERS);
+        }
     }
 
 
@@ -88,7 +113,25 @@ public class HalloweenStructure extends SimpleStructure {
         return topBlock.getFluidState().isEmpty();
     }
 
-
+    public static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        BlockPos blockpos = context.chunkPos().getMiddleBlockPosition(0);
+        context.config().startPool =
+                () -> context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+                        .get(new ResourceLocation(BumpkinBatch.ID, "haunted_house/start_pool"));
+        context.config().maxDepth = 10;
+        Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator =
+                JigsawPlacement.addPieces(
+                        context, // Used for JigsawPlacement to get all the proper behaviors done.
+                        PoolElementStructurePiece::new, // Needed in order to create a list of jigsaw pieces when making the structure's layout.
+                        blockpos, // Position of the structure. Y value is ignored if last parameter is set to true.
+                        false,  // Special boundary adjustments for villages. Keep this false and make your pieces not be partially intersecting.
+                        // Either not intersecting or fully contained will make children pieces spawn just fine.
+                        true // Place at heightmap (top land). Set this to false for structure to be place at the passed in blockpos's Y value instead.
+                        // keep false when placing structures in the nether to prevent heightmap placing the structure on the Bedrock roof.
+                );
+        return structurePiecesGenerator;
+    }
+    /*
     public static class FeatureStart extends StructureStart<NoneFeatureConfiguration> {
         // World seed
         private final long worldSeed;
@@ -137,5 +180,5 @@ public class HalloweenStructure extends SimpleStructure {
                 }
             }
         }
-    }
+    }*/
 }
