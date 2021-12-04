@@ -1,5 +1,6 @@
 package team.rusty.bumpkinbatch.worldgen.structure;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -19,11 +20,14 @@ import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfigura
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
+import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import team.rusty.util.worldgen.structure.SimpleStructure;
 
+import java.util.Optional;
 import java.util.Random;
 
 public class HalloweenStructure extends SimpleStructure {
@@ -31,7 +35,7 @@ public class HalloweenStructure extends SimpleStructure {
     public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
         return HalloweenStructure.FeatureStart::new;
     }
-
+    /*
     @Override
     protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long seed, WorldgenRandom worldgenRandom, ChunkPos pos, Biome biome, ChunkPos chunkPos2, NoneFeatureConfiguration noneFeatureConfiguration, LevelHeightAccessor levelHeightAccessor) {
         var random = new Random(seed + pos.hashCode());
@@ -47,9 +51,40 @@ public class HalloweenStructure extends SimpleStructure {
         NoiseColumn columnOfBlocks = chunkGenerator.getBaseColumn(centerOfChunk.getX(), centerOfChunk.getZ(), levelHeightAccessor);
 
         // Combine the column of blocks with land height and you get the top block itself
-        BlockState topBlock = columnOfBlocks.getBlockState(centerOfChunk.above(landHeight));
+        BlockState topBlock = columnOfBlocks.getBlock(landHeight);
 
         // Make sure not spawning on water or other fluids.
+        return topBlock.getFluidState().isEmpty();
+    } */
+
+    public HalloweenStructure(Codec<JigsawConfiguration> codec) {
+        super(codec, (context) -> {
+                    if (!HalloweenStructure.isFeatureChunk(context)) {
+                        return Optional.empty();
+                    }
+                    // Create the pieces layout of the structure and give it to
+                    else {
+                        return HalloweenStructure.createPiecesGenerator(context);
+                    }
+                },
+                PostPlacementProcessor.NONE);
+        })
+    }
+
+
+    public static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        BlockPos blockPos = context.chunkPos().getWorldPosition();
+
+        // Grab height of land. Will stop at first non-air block.
+        int landHeight = context.chunkGenerator().getFirstOccupiedHeight(blockPos.getX(), blockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+
+        // gets column of blocks at position
+        NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(blockPos.getX(), blockPos.getZ(), context.heightAccessor());
+
+        // Combine the column of blocks with land height and you get the top block itself
+        BlockState topBlock = columnOfBlocks.getBlock(landHeight);
+
+        //Makes sure not in water
         return topBlock.getFluidState().isEmpty();
     }
 
