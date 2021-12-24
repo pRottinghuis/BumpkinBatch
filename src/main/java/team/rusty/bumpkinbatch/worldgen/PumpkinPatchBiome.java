@@ -2,6 +2,7 @@ package team.rusty.bumpkinbatch.worldgen;
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.data.worldgen.Features;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
@@ -13,19 +14,23 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.blockplacers.SimpleBlockPlacer;
-import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockPileConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BushFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 import net.minecraft.world.level.levelgen.placement.FrequencyWithExtraChanceDecoratorConfiguration;
-import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
+import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BWorldGen;
-import team.rusty.util.worldgen.biome.AbstractBiome;
+import team.rusty.util.biome.AbstractBiome;
 
 import java.util.List;
 import java.util.Set;
@@ -36,8 +41,8 @@ public class PumpkinPatchBiome extends AbstractBiome {
         // Properties
         precipitation = Biome.Precipitation.RAIN;
         category = Biome.BiomeCategory.PLAINS;
-        depth = 0.1f;
-        scale = 0.05f;
+        //depth = 0.1f;
+        //scale = 0.05f;
         temperature = 0.9f;
         downfall = 0.5f;
 
@@ -51,36 +56,35 @@ public class PumpkinPatchBiome extends AbstractBiome {
                 .foliageColorOverride(0xc5d141)
                 .build();
 
+        BiomeDefaultFeatures.addDefaultCarversAndLakes(generation);
         BiomeDefaultFeatures.addDefaultCrystalFormations(generation);
-        BiomeDefaultFeatures.addDefaultCarvers(generation);
+        BiomeDefaultFeatures.addDefaultMonsterRoom(generation);
+        BiomeDefaultFeatures.addDefaultUndergroundVariety(generation); // this was added twice in the other versions OOPS
+        BiomeDefaultFeatures.addDefaultSprings(generation);
+        BiomeDefaultFeatures.addSurfaceFreezing(generation);
         BiomeDefaultFeatures.addDefaultOres(generation);
         BiomeDefaultFeatures.addDefaultSoftDisks(generation);
-        BiomeDefaultFeatures.addDefaultUndergroundVariety(generation);
-        BiomeDefaultFeatures.addDefaultLakes(generation);
-        BiomeDefaultFeatures.addDefaultSprings(generation);
-        BiomeDefaultFeatures.addDefaultMonsterRoom(generation);
         BiomeDefaultFeatures.addPlainGrass(generation);
         BiomeDefaultFeatures.addDefaultGrass(generation);
-        BiomeDefaultFeatures.addDefaultUndergroundVariety(generation);
-        BiomeDefaultFeatures.addSurfaceFreezing(generation);
 
 
-        generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
+        // generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
 
         // carving stations
-        generation.addStructureStart(BWorldGen.CARVING_STATION.get().configured());
-        generation.addStructureStart(BWorldGen.SPIDER_NEST.get().configured());
-        generation.addStructureStart(BWorldGen.HAUNTED_HOUSE.get().configured());
+        //generation.addStructureStart(BWorldGen.CARVING_STATION.get().configured());
+        //generation.addStructureStart(BWorldGen.SPIDER_NEST.get().configured());
+        //generation.addStructureStart(BWorldGen.HAUNTED_HOUSE.get().configured());
 
         // Grave Stones
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_FEATURE.get()
                 .configured(NoneFeatureConfiguration.INSTANCE)
-                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
-                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
-                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.5f, 1))));  // (# spawned guaranteed per chunk, chance spawn extra per chunk, count extra per chunk)
+                        .placed(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES),
+                                InSquarePlacement.spread(),
+                                PlacementUtils.countExtra(0, 0.5f, 1)));  // (# guaranteed, extra chance, extra count)
+
         // Pumpkins
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
-                .configured(new RandomPatchConfiguration.GrassConfigurationBuilder(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
+                .configured(new RandomPatchConfiguration(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));
         // Cross

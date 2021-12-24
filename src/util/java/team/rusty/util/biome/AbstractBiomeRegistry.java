@@ -1,9 +1,8 @@
-package team.rusty.util.worldgen.biome;
+package team.rusty.util.biome;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.core.Registry;
-import net.minecraft.data.worldgen.SurfaceBuilders;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -25,14 +24,14 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public final class AbstractBiomeRegistry {
     /** Dummy builder that gets changed later */
-    private static final Biome.BiomeBuilder DUMMY = new Biome.BiomeBuilder().precipitation(Biome.Precipitation.NONE).biomeCategory(Biome.BiomeCategory.PLAINS).depth(0.1f).scale(0.1f).temperature(0.1f).downfall(0.1f).specialEffects(new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).mobSpawnSettings(new MobSpawnSettings.Builder().build()).generationSettings(new BiomeGenerationSettings.Builder().surfaceBuilder(SurfaceBuilders.BADLANDS).build());
+    private static final Biome.BiomeBuilder DUMMY = new Biome.BiomeBuilder().precipitation(Biome.Precipitation.NONE).biomeCategory(Biome.BiomeCategory.PLAINS).temperature(0.1f).downfall(0.1f).specialEffects(new BiomeSpecialEffects.Builder().fogColor(0).waterColor(0).waterFogColor(0).skyColor(0).build()).mobSpawnSettings(new MobSpawnSettings.Builder().build()).generationSettings(new BiomeGenerationSettings.Builder().build());
 
     /** Biome deferred register */
     private final DeferredRegister<Biome> deferredRegister;
     /** Mod id of this biome registry */
     private final String modId;
     /** Map of all biome ids to abstract biomes */
-    private final BiMap<ResourceLocation, AbstractBiome> biomes = HashBiMap.create();
+    private final BiMap<ResourceLocation, AbstractBiome> registeredBiomes = HashBiMap.create();
 
     /**
      * Creates a new abstract biome registry with a built-in deferred register
@@ -56,11 +55,14 @@ public final class AbstractBiomeRegistry {
     public AbstractBiome register(String name, AbstractBiome biome) {
         // Put a dummy biome in minecraft registry
         deferredRegister.register(name, DUMMY::build);
-        // Put biome in biome registry
-        var biomeId = new ResourceLocation(modId, name);
-        biomes.put(biomeId, biome);
 
-        // This is what prints out the error messages about missing mobs/features/etc.
+        // Assign the biome its ID
+        var biomeId = new ResourceLocation(modId, name);
+        biome.id = ResourceKey.create(Registry.BIOME_REGISTRY, biomeId);
+        // Track biome in the registry
+        registeredBiomes.put(biomeId, biome);
+
+        // Prints out the error messages about missing mobs/features/etc.
         if (!FMLEnvironment.production) {
             BiomeChecker.checkClass(biome, biomeId);
         }
@@ -73,7 +75,7 @@ public final class AbstractBiomeRegistry {
      */
     private void applyBiomes(BiomeLoadingEvent event) {
         var biomeId = event.getName();
-        var biome = biomes.get(biomeId);
+        var biome = registeredBiomes.get(biomeId);
 
         if (biome != null) {
             // Only obtain the key once
@@ -89,13 +91,7 @@ public final class AbstractBiomeRegistry {
 
             event.setCategory(biome.getCategory());
             event.setClimate(biome.getClimate());
-            event.setDepth(biome.getDepth());
             event.setEffects(biome.getEffects());
-            event.setScale(biome.getScale());
         }
-    }
-
-    public ResourceLocation getId(AbstractBiome biome) {
-        return biomes.inverse().get(biome);
     }
 }

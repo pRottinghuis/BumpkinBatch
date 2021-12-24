@@ -1,5 +1,7 @@
-package team.rusty.util.worldgen.biome;
+package team.rusty.util.biome;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.AmbientMoodSettings;
 import net.minecraft.world.level.biome.Biome;
@@ -23,9 +25,9 @@ public abstract class AbstractBiome {
     /** Vanilla biome category */
     protected Biome.BiomeCategory category = Biome.BiomeCategory.PLAINS;
     /** Negative depth counts as ocean */
-    protected float depth = 0.1f;
+    //protected float depth = 0.1f;
     /** Vertical stretch */
-    protected float scale = 0.1f;
+    //protected float scale = 0.1f;
     /** Biome water/sky/fog colors, particles, and music. Basically anything clientside */
     protected BiomeSpecialEffects effects = DEFAULT_EFFECTS;
     /** Which type of weather effects are displayed when it is raining. */
@@ -35,6 +37,9 @@ public abstract class AbstractBiome {
     protected float temperature = 0.0f;
     /** Affects grass/foliage color. If greater than {@literal 0.85f}, the biome is considered humid. */
     protected float downfall = 0.0f;
+
+    /** Package-protected resource key */
+    ResourceKey<Biome> id;
 
     /** Copy + paste from VanillaBiomes */
     public static int calculateSkyColor(float temperature) {
@@ -63,16 +68,19 @@ public abstract class AbstractBiome {
         return category;
     }
 
-    public float getDepth() {
-        return depth;
-    }
-
-    public float getScale() {
-        return scale;
-    }
-
     public BiomeSpecialEffects getEffects() {
         return effects;
+    }
+
+    /**
+     * Used to reference the biome for spawning structures
+     */
+    public ResourceKey<Biome> getResourceKey() {
+        return id;
+    }
+
+    public ResourceLocation getId() {
+        return id.location();
     }
 
     public record SpawnEntry(BiomeManager.BiomeType type, int weight) {

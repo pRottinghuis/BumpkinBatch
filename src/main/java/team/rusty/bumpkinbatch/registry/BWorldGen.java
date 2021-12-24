@@ -3,14 +3,20 @@ package team.rusty.bumpkinbatch.registry;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.features.FeatureUtils;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -19,18 +25,20 @@ import team.rusty.bumpkinbatch.worldgen.PumpkinPatchBiome;
 import team.rusty.bumpkinbatch.worldgen.feature.CrossFeature;
 import team.rusty.bumpkinbatch.worldgen.feature.GraveStoneFeature;
 import team.rusty.bumpkinbatch.worldgen.structure.HalloweenStructure;
-import team.rusty.util.worldgen.biome.AbstractBiome;
-import team.rusty.util.worldgen.biome.AbstractBiomeRegistry;
-import team.rusty.util.worldgen.structure.SimpleStructure;
-import team.rusty.util.worldgen.structure.SimpleStructureRegistry;
+import team.rusty.util.biome.AbstractBiome;
+import team.rusty.util.biome.AbstractBiomeRegistry;
+import team.rusty.util.feature.WorldGenRegistry;
+import team.rusty.util.structure.SimpleStructureRegistry;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BWorldGen {
     public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, BumpkinBatch.ID);
     public static final AbstractBiomeRegistry BIOMES = new AbstractBiomeRegistry(BumpkinBatch.ID);
-    public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, BumpkinBatch.ID);
+    public static final WorldGenRegistry WORLD_GEN = new WorldGenRegistry(BumpkinBatch.ID);
+    public static final SimpleStructureRegistry STRUCTURES = new SimpleStructureRegistry(BumpkinBatch.ID);
 
     /** Biomes */
     public static final AbstractBiome PUMPKIN_PATCH = BIOMES.register("pumpkin_patch", new PumpkinPatchBiome());
@@ -43,6 +51,14 @@ public class BWorldGen {
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> CARVING_STATION = STRUCTURES.register("carving_station", () -> (new HalloweenStructure(JigsawConfiguration.CODEC)));
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> HAUNTED_HOUSE = STRUCTURES.register("haunted_house", () -> (new HalloweenStructure(JigsawConfiguration.CODEC)));
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> SPIDER_NEST = STRUCTURES.register("spider_nest", () -> (new HalloweenStructure(JigsawConfiguration.CODEC)));
+
+    /** Configured features */
+    public static final Lazy<? extends ConfiguredFeature<RandomPatchConfiguration, ?>> SCORCHED_FIRE_PATCH_CONFIGURED = WORLD_GEN.configuredFeature("scorched_fire_patch_configured", () -> {
+        return Feature.RANDOM_PATCH.configured(FeatureUtils.simplePatchConfiguration(Feature.SIMPLE_BLOCK.configured(new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.SOUL_FIRE))), List.of(ABlocks.SCORCHED_EARTH.get())));/*Feature.RANDOM_PATCH
+                .configured(new RandomPatchConfiguration(64, 7, 3, () -> {
+                    new SimpleBlockFeature()
+                }).whitelist(ImmutableSet.of(ABlocks.SCORCHED_EARTH.get())).noProjection().build()).decorated(Features.Decorators.FIRE).countRandom(5);*/
+    });
 
     public static void setupStructures() {
         setupMapSpacingAndLand(

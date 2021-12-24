@@ -4,45 +4,30 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.Vec3i;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.structures.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import team.rusty.bumpkinbatch.BumpkinBatch;
-import team.rusty.bumpkinbatch.entity.ReaperEntity;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BWorldGen;
-import team.rusty.util.worldgen.structure.SimpleStructure;
+import team.rusty.util.structure.SimpleStructure;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
-public class HalloweenStructure extends StructureFeature<JigsawConfiguration> {
+public class HalloweenStructure extends SimpleStructure {
 
     //https://github.com/TelepathicGrunt/StructureTutorialMod/blob/1.18.x-Forge-Jigsaw/src/main/java/com/telepathicgrunt/structuretutorial/structures/RunDownHouseStructure.java
 
@@ -130,6 +115,11 @@ public class HalloweenStructure extends StructureFeature<JigsawConfiguration> {
                         // keep false when placing structures in the nether to prevent heightmap placing the structure on the Bedrock roof.
                 );
         return structurePiecesGenerator;
+    }
+
+    @Override
+    public List<ResourceKey<Biome>> getSpawnBiomes() {
+        return ResourceKey.create(Registry.BIOME_REGISTRY, BWorldGen.PUMPKIN_PATCH.getResourceKey());
     }
     /*
     public static class FeatureStart extends StructureStart<NoneFeatureConfiguration> {

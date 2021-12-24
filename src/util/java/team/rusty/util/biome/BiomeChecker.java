@@ -1,4 +1,4 @@
-package team.rusty.util.worldgen.biome;
+package team.rusty.util.biome;
 
 import net.minecraft.resources.ResourceLocation;
 import org.objectweb.asm.ClassReader;
@@ -20,8 +20,7 @@ public final class BiomeChecker {
             "addDefaultOres", "Missing overworld ores",
             "addDefaultUndergroundVariety", "Missing granite, andesite, diorite",
             "addDefaultSoftDisks", "Missing clay and sand disks",
-            "addDefaultCarvers", "Missing overworld caves and ravines",
-            "addDefaultLakes", "Missing overworld water lakes",
+            "addDefaultCarversAndLakes", "Missing overworld caves, lakes, and ravines",
             "addDefaultCrystalFormations", "Missing overworld geodes",
             "addDefaultMonsterRoom", "Missing overworld dungeons",
             "addDefaultSprings", "Missing overworld water and lava springs",
