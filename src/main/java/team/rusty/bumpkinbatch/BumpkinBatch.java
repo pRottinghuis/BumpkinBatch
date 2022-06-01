@@ -1,5 +1,6 @@
 package team.rusty.bumpkinbatch;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -11,6 +12,9 @@ import team.rusty.bumpkinbatch.registry.BBlocks;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BItems;
 import team.rusty.bumpkinbatch.registry.BWorldGen;
+import team.rusty.bumpkinbatch.worldgen.biome.BBiomeProvider;
+import terrablender.api.RegionType;
+import terrablender.api.Regions;
 
 @Mod(BumpkinBatch.ID)
 public class BumpkinBatch {
@@ -31,5 +35,13 @@ public class BumpkinBatch {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientHandler.register();
         }
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event) {
+        event.enqueueWork(() ->
+        {
+            // Given we only add two biomes, we should keep our weight relatively low.
+            Regions.register(new BBiomeProvider(new ResourceLocation(ID, "biome_provider"), RegionType.OVERWORLD, 2));
+        });
     }
 }
