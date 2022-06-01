@@ -21,7 +21,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import team.rusty.bumpkinbatch.BumpkinBatch;
-import team.rusty.bumpkinbatch.worldgen.PumpkinPatchBiome;
+import team.rusty.bumpkinbatch.worldgen.custom.PumpkinPatchBiome;
 import team.rusty.bumpkinbatch.worldgen.feature.CrossFeature;
 import team.rusty.bumpkinbatch.worldgen.feature.GraveStoneFeature;
 import team.rusty.bumpkinbatch.worldgen.structure.HalloweenStructure;
