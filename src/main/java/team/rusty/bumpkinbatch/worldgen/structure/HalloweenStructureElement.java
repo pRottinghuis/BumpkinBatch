@@ -2,6 +2,7 @@ package team.rusty.bumpkinbatch.worldgen.structure;
 
 import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.ProcessorLists;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -10,10 +11,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 import net.minecraft.world.level.block.state.properties.StructureMode;
-import net.minecraft.world.level.levelgen.feature.structures.SinglePoolElement;
-import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
-import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.JigsawReplacementProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
@@ -21,18 +22,17 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import team.rusty.bumpkinbatch.BumpkinBatch;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class HalloweenStructureElement extends SinglePoolElement {
     public static final ResourceLocation CANDY_CHEST = new ResourceLocation(BumpkinBatch.ID, "chests/candy_chest");
 
-    protected HalloweenStructureElement(Either<ResourceLocation, StructureTemplate> template, Supplier<StructureProcessorList> processors, StructureTemplatePool.Projection projection) {
+    protected HalloweenStructureElement(Either<ResourceLocation, StructureTemplate> template, Holder<StructureProcessorList> processors, StructureTemplatePool.Projection projection) {
         super(template, processors, projection);
     }
 
     public static HalloweenStructureElement create(StructurePoolElement element) {
         if (element instanceof SinglePoolElement single) {
-            return new HalloweenStructureElement(single.template, () -> ProcessorLists.EMPTY, StructureTemplatePool.Projection.RIGID);
+            return new HalloweenStructureElement(single.template, ProcessorLists.EMPTY, StructureTemplatePool.Projection.RIGID);
         } else {
             throw new RuntimeException("broken");
         }
@@ -51,7 +51,8 @@ public class HalloweenStructureElement extends SinglePoolElement {
             structureplacesettings.addProcessor(JigsawReplacementProcessor.INSTANCE);
         }
 
-        this.processors.get().list().forEach(structureplacesettings::addProcessor);
+        // idk if using the value is bad practice
+        this.processors.value().list().forEach(structureplacesettings::addProcessor);
         this.getProjection().getProcessors().forEach(structureplacesettings::addProcessor);
         return structureplacesettings;
     }

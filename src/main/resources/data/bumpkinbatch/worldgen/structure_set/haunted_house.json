@@ -1,0 +1,14 @@
+{
+    "structures": [
+        {
+            "structure": "bumpkinbatch:haunted_house",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "salt": 6943549,
+        "spacing": 15,
+        "separation": 6,
+        "type": "minecraft:random_spread"
+    }
+}

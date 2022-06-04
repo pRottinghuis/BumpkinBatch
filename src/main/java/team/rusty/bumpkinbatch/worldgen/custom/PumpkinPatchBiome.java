@@ -1,27 +1,11 @@
 package team.rusty.bumpkinbatch.worldgen.custom;
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockPileConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
-import net.minecraft.world.level.levelgen.feature.foliageplacers.BushFoliagePlacer;
-import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
-import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
-import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
-import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import team.rusty.bumpkinbatch.registry.BEntities;
@@ -29,7 +13,6 @@ import team.rusty.bumpkinbatch.registry.BWorldGen;
 import team.rusty.util.biome.AbstractBiome;
 
 import java.util.List;
-import java.util.Set;
 
 public class PumpkinPatchBiome extends AbstractBiome {
     @Override
@@ -63,7 +46,6 @@ public class PumpkinPatchBiome extends AbstractBiome {
         BiomeDefaultFeatures.addPlainGrass(generation);
         BiomeDefaultFeatures.addDefaultGrass(generation);
 
-
         // generation.surfaceBuilder(SurfaceBuilder.DEFAULT.configured(SurfaceBuilder.CONFIG_GRASS));
 
         // carving stations
@@ -72,23 +54,13 @@ public class PumpkinPatchBiome extends AbstractBiome {
         //generation.addStructureStart(BWorldGen.HAUNTED_HOUSE.get().configured());
 
         // Grave Stones
-        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_FEATURE.get()
-                .configured(NoneFeatureConfiguration.INSTANCE)
-                        .placed(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES),
-                                InSquarePlacement.spread(),
-                                PlacementUtils.countExtra(0, 0.5f, 1)));  // (# guaranteed, extra chance, extra count)
-
+        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_PLACED_FEATURE.getHolder().get());  // (# guaranteed, extra chance, extra count)
+/*
         // Pumpkins
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
                 .configured(new RandomPatchConfiguration(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));
-        // Cross
-//        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.CROSS_FEATURE.get()
-//                .configured(new BlockStateConfiguration(Blocks.COBBLESTONE.defaultBlockState()))
-//                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
-//                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
-//                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.05f, 1))));
         // Hay bales
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, Feature.BLOCK_PILE
                 .configured(new BlockPileConfiguration(new SimpleStateProvider(Blocks.HAY_BLOCK.defaultBlockState())))
@@ -116,8 +88,9 @@ public class PumpkinPatchBiome extends AbstractBiome {
                         new TwoLayersFeatureSize(0, 0, 0))).build())
                 .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
                 .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES))));
+                */
 
-        BiomeDefaultFeatures.monsters(spawns, 19, 1, 100);
+        BiomeDefaultFeatures.monsters(spawns, 19, 1, 100, false);
         BiomeDefaultFeatures.commonSpawns(spawns);
 
         spawns.addSpawn(MobCategory.MONSTER, new MobSpawnSettings.SpawnerData(BEntities.REAPER.get(), 5, 1, 1));

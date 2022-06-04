@@ -12,7 +12,7 @@ import team.rusty.bumpkinbatch.registry.BBlocks;
 import team.rusty.bumpkinbatch.registry.BEntities;
 import team.rusty.bumpkinbatch.registry.BItems;
 import team.rusty.bumpkinbatch.registry.BWorldGen;
-import team.rusty.bumpkinbatch.worldgen.biome.BBiomeProvider;
+import team.rusty.bumpkinbatch.worldgen.biome.PumpkinPatchRegion;
 import terrablender.api.RegionType;
 import terrablender.api.Regions;
 
@@ -35,13 +35,14 @@ public class BumpkinBatch {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             ClientHandler.register();
         }
+        mod.addListener(BumpkinBatch::commonSetup);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event) {
+    private static void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() ->
         {
             // Given we only add two biomes, we should keep our weight relatively low.
-            Regions.register(new BBiomeProvider(new ResourceLocation(ID, "biome_provider"), RegionType.OVERWORLD, 2));
+            Regions.register(new PumpkinPatchRegion(new ResourceLocation(ID, "biome_provider"), RegionType.OVERWORLD, 2));
         });
     }
 }

@@ -1,0 +1,14 @@
+{
+    "structures": [
+        {
+            "structure": "bumpkinbatch:spider_nest",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "salt": 6943277,
+        "spacing": 8,
+        "separation": 2,
+        "type": "minecraft:random_spread"
+    }
+}

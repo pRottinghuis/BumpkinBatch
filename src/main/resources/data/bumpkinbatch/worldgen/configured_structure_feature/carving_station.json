@@ -1,0 +1,10 @@
+{
+    "type": "bumpkinbatch:halloween_structure",
+    "config": {
+        "start_pool": "bumpkinbatch:carving_station/pool",
+        "size": 1
+    },
+    "biomes": "#bumpkinbatch:has_structure/carving_station",
+    "adapt_noise": true,
+    "spawn_overrides": {}
+}

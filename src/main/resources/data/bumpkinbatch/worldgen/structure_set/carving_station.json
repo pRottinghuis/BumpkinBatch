@@ -1,0 +1,14 @@
+{
+    "structures": [
+        {
+            "structure": "bumpkinbatch:carving_station",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "salt": 6944653,
+        "spacing": 12,
+        "separation": 4,
+        "type": "minecraft:random_spread"
+    }
+}
