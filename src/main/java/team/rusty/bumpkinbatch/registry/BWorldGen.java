@@ -18,6 +18,7 @@ import team.rusty.bumpkinbatch.worldgen.custom.PumpkinPatchBiome;
 import team.rusty.bumpkinbatch.worldgen.feature.CrossFeature;
 import team.rusty.bumpkinbatch.worldgen.feature.GraveStoneFeature;
 import team.rusty.bumpkinbatch.worldgen.structure.HalloweenStructure;
+import team.rusty.bumpkinbatch.worldgen.structure.HauntedHouseStructure;
 import team.rusty.util.biome.AbstractBiome;
 import team.rusty.util.biome.AbstractBiomeRegistry;
 import team.rusty.util.feature.FeatureRegistry;
@@ -46,4 +47,5 @@ public class BWorldGen {
 
     /** Structures */
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> HALLOWEEN_STRUCTURE = STRUCTURES.register("halloween_structure", HalloweenStructure::new);
+    public static final RegistryObject<StructureFeature<?>> HAUNTED_HOUSE_STRUCTURE = STRUCTURES.register("haunted_house_structure", HauntedHouseStructure::new);
 }

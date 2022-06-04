@@ -7,6 +7,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import team.rusty.bumpkinbatch.client.ClientHandler;
 import team.rusty.bumpkinbatch.registry.BBlocks;
 import team.rusty.bumpkinbatch.registry.BEntities;
@@ -19,6 +21,7 @@ import terrablender.api.Regions;
 @Mod(BumpkinBatch.ID)
 public class BumpkinBatch {
     public static final String ID = "bumpkinbatch";
+    public static final Logger LOGGER = LogManager.getLogger();
 
     public BumpkinBatch() {
         IEventBus mod = FMLJavaModLoadingContext.get().getModEventBus();
