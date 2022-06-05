@@ -1,6 +1,8 @@
 package team.rusty.bumpkinbatch.worldgen.custom;
 
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.data.worldgen.placement.VegetationPlacements;
+import net.minecraft.data.worldgen.placement.VillagePlacements;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -55,9 +57,12 @@ public class PumpkinPatchBiome extends AbstractBiome {
 
         // Grave Stones
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, BWorldGen.GRAVESTONE_PLACED_FEATURE.getHolder().get());  // (# guaranteed, extra chance, extra count)
-/*
+
         // Pumpkins
-        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_PUMPKIN);
+        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, VillagePlacements.PILE_HAY_VILLAGE);
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.FANCY_OAKS_PLACED_FEATURE.getHolder().get());
+        /*generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
                 .configured(new RandomPatchConfiguration(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));

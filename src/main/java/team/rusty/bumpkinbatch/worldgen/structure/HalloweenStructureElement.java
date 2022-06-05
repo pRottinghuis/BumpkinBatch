@@ -33,7 +33,7 @@ public class HalloweenStructureElement extends SinglePoolElement {
     public static HalloweenStructureElement create(StructurePoolElement element) {
         if (element instanceof SinglePoolElement single) {
             return new HalloweenStructureElement(single.template, ProcessorLists.EMPTY, StructureTemplatePool.Projection.RIGID);
-        } else {
+        } else { 
             throw new RuntimeException("broken");
         }
     }
