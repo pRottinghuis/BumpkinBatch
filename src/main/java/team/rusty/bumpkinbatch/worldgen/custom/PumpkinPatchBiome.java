@@ -62,16 +62,13 @@ public class PumpkinPatchBiome extends AbstractBiome {
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, VegetationPlacements.PATCH_PUMPKIN);
         generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, VillagePlacements.PILE_HAY_VILLAGE);
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.FANCY_OAKS_PLACED_FEATURE.getHolder().get());
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.LEAF_PILE.getHolder().get());
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.BUSH.getHolder().get());
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.LONE_TREE.getHolder().get());
         /*generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
                 .configured(new RandomPatchConfiguration(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
                         .build()));
-        // Hay bales
-        generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, Feature.BLOCK_PILE
-                .configured(new BlockPileConfiguration(new SimpleStateProvider(Blocks.HAY_BLOCK.defaultBlockState())))
-                .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))
-                .decorated(FeatureDecorator.HEIGHTMAP.configured(new HeightmapConfiguration(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES)))
-                .decorated(FeatureDecorator.COUNT_EXTRA.configured(new FrequencyWithExtraChanceDecoratorConfiguration(0, 0.1f, 1))));
         // Lone trees
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Features.FANCY_OAK
                 .decorated(FeatureDecorator.SQUARE.configured(new NoneDecoratorConfiguration()))

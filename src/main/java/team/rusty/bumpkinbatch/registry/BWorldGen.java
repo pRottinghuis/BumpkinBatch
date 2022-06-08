@@ -1,16 +1,26 @@
 package team.rusty.bumpkinbatch.registry;
 
 import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.RandomPatchFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.foliageplacers.BushFoliagePlacer;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
+import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -41,37 +51,32 @@ public class BWorldGen {
     public static final RegistryObject<CrossFeature> CROSS_FEATURE = FEATURES.feature("cross_feature", () -> new CrossFeature(BlockStateConfiguration.CODEC));
     public static final RegistryObject<GraveStoneFeature> GRAVESTONE_FEATURE = FEATURES.feature("gravestone", () -> new GraveStoneFeature(NoneFeatureConfiguration.CODEC));
 
-    public static final RegistryObject<RandomPatchFeature> PUMPKINS = FEATURES.feature("pumpkins", () -> new RandomPatchFeature(RandomPatchConfiguration.CODEC));
-
     /** Configured features */
     public static final RegistryObject<ConfiguredFeature<?, ?>> GRAVESTONE_CONFIGURED_FEATURE = FEATURES.configuredFeature("gravestone", () -> new ConfiguredFeature(GRAVESTONE_FEATURE.get(), NoneFeatureConfiguration.INSTANCE));
-    //public static final RegistryObject<ConfiguredFeature<?, ?>> PUMPKINS_CONFIGURED_FEATURE = FEATURES.configuredFeature("pumpkins", () -> {
-    //    FeatureUtils.register("patch_grass_jungle",
-    //            Feature.RANDOM_PATCH,
-    //            new RandomPatchConfiguration(32,
-    //                    7,
-    //                    3,
-    //                    PlacementUtils.filtered(Feature.SIMPLE_BLOCK,
-    //                            new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(Blocks.GRASS.defaultBlockState(), 3).add(Blocks.FERN.defaultBlockState(), 1))),
-    //                            BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.not(BlockPredicate.matchesBlock(Blocks.PODZOL, new BlockPos(0, -1, 0)))))))
-    //    return PlacementUtils.filtered(Feature.SIMPLE_BLOCK, )
-    //    //return new RandomPatchConfiguration(64,
-    //    //        7,
-    //    //        3,
-    //    //        PlacementUtils.filtered(Feature.SIMPLE_BLOCK,
-    //    //                new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.PUMPKIN)),
-    //    //                BlockPredicate.allOf(BlockPredicate.replaceable(),
-    //    //                        BlockPredicate.matchesBlock(Blocks.GRASS_BLOCK, new BlockPos(0, -1, 0)))));
-    //});
+    public static final RegistryObject<ConfiguredFeature<RandomPatchConfiguration, ?>> LEAF_PILE_CONFIGURED_FEATURE = FEATURES.configuredFeature("leaf_pile", () -> new ConfiguredFeature(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.OAK_LEAVES))));
+    public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> BUSH_CONFIGURED = FEATURES.configuredFeature(
+            "bush",
+            () -> new ConfiguredFeature(Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                    BlockStateProvider.simple(Blocks.OAK_LOG),
+                    new StraightTrunkPlacer(1, 0, 0),
+                    BlockStateProvider.simple(Blocks.OAK_LEAVES),
+                    new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(1), 2),
+                    new TwoLayersFeatureSize(1, 0, 1)).build()));
+    public static final RegistryObject<ConfiguredFeature<TreeConfiguration, ?>> LONE_TREE_CONFIGURED = FEATURES.configuredFeature(
+            "lone_tree",
+            () -> new ConfiguredFeature(Feature.TREE, TreeFeatures.FANCY_OAK.value().config()));
 
     /** Placed features */
     public static final RegistryObject<PlacedFeature> GRAVESTONE_PLACED_FEATURE = FEATURES.placedFeature("gravestone", () -> new PlacedFeature(GRAVESTONE_CONFIGURED_FEATURE.getHolder().get(),
-            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.5f, 1))));
-    public static final RegistryObject<PlacedFeature> FANCY_OAKS_PLACED_FEATURE = FEATURES.placedFeature("fancy_oaks", () -> {
-        return new PlacedFeature(cast(TreeFeatures.FANCY_OAK), List.of(
-            HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.3f, 1)
-        ));
-    });
+            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.1f, 1))));
+    public static final RegistryObject<PlacedFeature> FANCY_OAKS_PLACED_FEATURE = FEATURES.placedFeature("fancy_oaks", () -> new PlacedFeature(cast(TreeFeatures.FANCY_OAK),
+            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.1f, 1))));
+    public static final RegistryObject<PlacedFeature> LEAF_PILE = FEATURES.placedFeature("leaf_pile", () -> new PlacedFeature(cast(LEAF_PILE_CONFIGURED_FEATURE.getHolder().get()),
+            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(2, 0.1f, 1))));
+    public static final RegistryObject<PlacedFeature>  BUSH = FEATURES.placedFeature("bush", () -> new PlacedFeature(cast(BUSH_CONFIGURED.getHolder().get()),
+            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread())));
+    public static final RegistryObject<PlacedFeature>  LONE_TREE = FEATURES.placedFeature("lone_tree", () -> new PlacedFeature(cast(LONE_TREE_CONFIGURED.getHolder().get()),
+            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.1f, 1))));
 
     /** Structures */
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> HALLOWEEN_STRUCTURE = STRUCTURES.register("halloween_structure", HalloweenStructure::new);
