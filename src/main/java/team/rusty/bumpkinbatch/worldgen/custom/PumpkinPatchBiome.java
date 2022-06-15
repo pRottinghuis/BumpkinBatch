@@ -65,6 +65,7 @@ public class PumpkinPatchBiome extends AbstractBiome {
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.LEAF_PILE.getHolder().get());
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.BUSH.getHolder().get());
         generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.LONE_TREE.getHolder().get());
+        generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, BWorldGen.PUMPKIN_PILE.getHolder().get());
         /*generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, Feature.RANDOM_PATCH
                 .configured(new RandomPatchConfiguration(new SimpleStateProvider(Blocks.PUMPKIN.defaultBlockState()), SimpleBlockPlacer.INSTANCE)
                         .whitelist(Set.of(Blocks.GRASS_BLOCK))
