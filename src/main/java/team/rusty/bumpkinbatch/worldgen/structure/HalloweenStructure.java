@@ -1,12 +1,6 @@
 package team.rusty.bumpkinbatch.worldgen.structure;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import team.rusty.util.structure.SimpleStructure;
 
 public class HalloweenStructure extends SimpleStructure {
@@ -16,10 +10,10 @@ public class HalloweenStructure extends SimpleStructure {
     public HalloweenStructure() {
         super(0, true, true, (m, element, p, gld, r, bb) -> {
             return new PoolElementStructurePiece(m, HalloweenStructureElement.create(element), p, gld, r, bb);
-        }, HalloweenStructure::canSpawn);
+        }, SimpleStructure::canSpawn);
     }
 
-    public static boolean canSpawn(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+    /*public static boolean canSpawn(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
         BlockPos blockPos = context.chunkPos().getWorldPosition();
 
         // Grab height of land. Will stop at first non-air block.
@@ -33,5 +27,5 @@ public class HalloweenStructure extends SimpleStructure {
 
         //Makes sure not in water
         return topBlock.getFluidState().isEmpty();
-    }
+    }*/
 }

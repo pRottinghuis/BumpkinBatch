@@ -32,7 +32,7 @@ public abstract class SimpleStructure extends StructureFeature<JigsawConfigurati
         });
     }
 
-    private static boolean shouldPlace(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+    protected static boolean canSpawn(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
         var pos = context.chunkPos().getWorldPosition();
         var level = context.heightAccessor();
 

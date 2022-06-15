@@ -1,6 +1,8 @@
 package team.rusty.bumpkinbatch.worldgen.structure;
 
 import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.ProcessorLists;
@@ -14,19 +16,25 @@ import net.minecraft.world.level.block.state.properties.StructureMode;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.templatesystem.JigsawReplacementProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorList;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import team.rusty.bumpkinbatch.BumpkinBatch;
+import team.rusty.bumpkinbatch.registry.BWorldGen;
 
 import java.util.Random;
 
 public class HalloweenStructureElement extends SinglePoolElement {
     public static final ResourceLocation CANDY_CHEST = new ResourceLocation(BumpkinBatch.ID, "chests/candy_chest");
 
-    protected HalloweenStructureElement(Either<ResourceLocation, StructureTemplate> template, Holder<StructureProcessorList> processors, StructureTemplatePool.Projection projection) {
+    public static final Codec<HalloweenStructureElement> CODEC = RecordCodecBuilder.create((p_210429_) -> {
+        return p_210429_.group(templateCodec(), processorsCodec(), projectionCodec()).apply(p_210429_, HalloweenStructureElement::new);
+    });
+
+    public HalloweenStructureElement(Either<ResourceLocation, StructureTemplate> template, Holder<StructureProcessorList> processors, StructureTemplatePool.Projection projection) {
         super(template, processors, projection);
     }
 
@@ -74,5 +82,15 @@ public class HalloweenStructureElement extends SinglePoolElement {
                 }
             }
         }
+    }
+
+    @Override
+    public StructurePoolElementType<?> getType() {
+        return BWorldGen.HALLOWEEN_ELEMENT.get();
+    }
+
+    @Override
+    public String toString() {
+        return "HalloweenElement[" + this.template + "]";
     }
 }

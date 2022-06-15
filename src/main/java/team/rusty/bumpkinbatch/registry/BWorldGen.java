@@ -12,7 +12,12 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.AcaciaFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
@@ -21,6 +26,7 @@ import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import team.rusty.bumpkinbatch.BumpkinBatch;
@@ -28,6 +34,7 @@ import team.rusty.bumpkinbatch.worldgen.custom.PumpkinPatchBiome;
 import team.rusty.bumpkinbatch.worldgen.feature.CrossFeature;
 import team.rusty.bumpkinbatch.worldgen.feature.GraveStoneFeature;
 import team.rusty.bumpkinbatch.worldgen.structure.HalloweenStructure;
+import team.rusty.bumpkinbatch.worldgen.structure.HalloweenStructureElement;
 import team.rusty.bumpkinbatch.worldgen.structure.HauntedHouseStructure;
 import team.rusty.util.biome.AbstractBiome;
 import team.rusty.util.biome.AbstractBiomeRegistry;
@@ -40,6 +47,7 @@ public class BWorldGen {
     public static final AbstractBiomeRegistry BIOMES = new AbstractBiomeRegistry(BumpkinBatch.ID);
     public static final FeatureRegistry FEATURES = new FeatureRegistry(BumpkinBatch.ID);
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(Registry.STRUCTURE_FEATURE_REGISTRY, BumpkinBatch.ID);
+    public static final DeferredRegister<StructurePoolElementType<?>> STRUCTURE_POOL_ELEMENTS = DeferredRegister.create(Registry.STRUCTURE_POOL_ELEMENT_REGISTRY, BumpkinBatch.ID);
 
     /** Biomes */
     public static final AbstractBiome PUMPKIN_PATCH = BIOMES.register("pumpkin_patch", new PumpkinPatchBiome());
@@ -65,13 +73,11 @@ public class BWorldGen {
             "lone_tree",
             () -> new ConfiguredFeature(Feature.TREE, TreeFeatures.FANCY_OAK.value().config()));
 
-
-
     /** Placed features */
     public static final RegistryObject<PlacedFeature> GRAVESTONE_PLACED_FEATURE = FEATURES.placedFeature("gravestone", () -> new PlacedFeature(GRAVESTONE_CONFIGURED.getHolder().get(),
             List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.1f, 1))));
     public static final RegistryObject<PlacedFeature> FANCY_OAKS_PLACED_FEATURE = FEATURES.placedFeature("fancy_oaks", () -> new PlacedFeature(cast(TreeFeatures.FANCY_OAK),
-            List.of(HeightmapPlacement.onHeightmap(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES), InSquarePlacement.spread(), PlacementUtils.countExtra(0, 0.1f, 1))));
+            VegetationPlacements.treePlacement( PlacementUtils.countExtra(0, 0.1f, 1), Blocks.OAK_SAPLING)));
     public static final RegistryObject<PlacedFeature> LEAF_PILE = FEATURES.placedFeature("leaf_pile", () -> new PlacedFeature(cast(LEAF_PILE_CONFIGURED.getHolder().get()),
             List.of(RarityFilter.onAverageOnceEvery(5), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP)));
     public static final RegistryObject<PlacedFeature> PUMPKIN_PILE = FEATURES.placedFeature("pumpkin_pile", () -> new PlacedFeature(cast(PUMPKIN_PILE_CONFIGURED.getHolder().get()),
@@ -84,6 +90,9 @@ public class BWorldGen {
     /** Structures */
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> HALLOWEEN_STRUCTURE = STRUCTURES.register("halloween_structure", HalloweenStructure::new);
     public static final RegistryObject<StructureFeature<?>> HAUNTED_HOUSE_STRUCTURE = STRUCTURES.register("haunted_house_structure", HauntedHouseStructure::new);
+
+    /** Halloween Element to keep data blocks */
+    public static final RegistryObject<StructurePoolElementType<HalloweenStructureElement>> HALLOWEEN_ELEMENT = STRUCTURE_POOL_ELEMENTS.register("halloween_element", () -> (StructurePoolElementType<HalloweenStructureElement>) () -> HalloweenStructureElement.CODEC);
 
     // boo generics boo
     @SuppressWarnings("unchecked")

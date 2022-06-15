@@ -32,6 +32,7 @@ public class BumpkinBatch {
         BWorldGen.BIOMES.register(mod);
         BWorldGen.FEATURES.register(mod);
         BWorldGen.STRUCTURES.register(mod);
+        BWorldGen.STRUCTURE_POOL_ELEMENTS.register(mod);
 
         mod.addListener(BEntities::addEntityAttribs);
 
@@ -42,9 +43,7 @@ public class BumpkinBatch {
     }
 
     private static void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() ->
-        {
-            // Given we only add two biomes, we should keep our weight relatively low.
+        event.enqueueWork(() -> {
             Regions.register(new PumpkinPatchRegion(new ResourceLocation(ID, "biome_provider"), RegionType.OVERWORLD, 2));
         });
     }
