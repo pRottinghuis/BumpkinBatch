@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[38,)" # For spawn eggs
+loaderVersion = "[41,)" # For spawn eggs
 license = "All rights reserved"
 
 [[mods]]
@@ -15,20 +15,20 @@ Entry in the SpookyJam 2021. New pumpkin patch biome. At night it will make your
 [[dependencies.bumpkinbatch]]
 modId = "forge"
 mandatory = true
-versionRange = "[38,)"
+versionRange = "[41,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bumpkinbatch]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.18.1,1.19)"
+versionRange = "[1.19,1.20)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.bumpkinbatch]]
 modId = "terrablender"
 mandatory = true
-versionRange = "[1.1.0,)"
+versionRange = "[2.0.0,)"
 ordering = "NONE"
 side = "BOTH"
