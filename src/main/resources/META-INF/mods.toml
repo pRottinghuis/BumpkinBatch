@@ -1,25 +1,34 @@
-modLoader="javafml"
-loaderVersion="[38,)" # For spawn eggs
-license="All rights reserved"
+modLoader = "javafml"
+loaderVersion = "[38,)" # For spawn eggs
+license = "All rights reserved"
 
 [[mods]]
-modId="bumpkinbatch"
-version="${file.jarVersion}"
-displayName="Bumpkin Batch"
-credits="The exaggerated swagger of the Rusty Team"
-authors="bobertrd, cfrishausen, TheDarkColour"
-description='''
+modId = "bumpkinbatch"
+version = "${file.jarVersion}"
+displayName = "Bumpkin Batch"
+credits = "The exaggerated swagger of the Rusty Team"
+authors = "bobertrd, cfrishausen, TheDarkColour"
+description = '''
 Entry in the SpookyJam 2021. New pumpkin patch biome. At night it will make your bones rattle...
 '''
+
 [[dependencies.bumpkinbatch]]
-    modId="forge"
-    mandatory=true
-    versionRange="[38,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[38,)"
+ordering = "NONE"
+side = "BOTH"
+
 [[dependencies.bumpkinbatch]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.18.1,1.19)"
-    ordering="NONE"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.1,1.19)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.bumpkinbatch]]
+modId = "terrablender"
+mandatory = true
+versionRange = "[1.1.0,)"
+ordering = "NONE"
+side = "BOTH"

@@ -30,8 +30,8 @@ import java.util.Random;
 public class HalloweenStructureElement extends SinglePoolElement {
     public static final ResourceLocation CANDY_CHEST = new ResourceLocation(BumpkinBatch.ID, "chests/candy_chest");
 
-    public static final Codec<HalloweenStructureElement> CODEC = RecordCodecBuilder.create((p_210429_) -> {
-        return p_210429_.group(templateCodec(), processorsCodec(), projectionCodec()).apply(p_210429_, HalloweenStructureElement::new);
+    public static final Codec<HalloweenStructureElement> CODEC = RecordCodecBuilder.create((builder) -> {
+        return builder.group(templateCodec(), projectionCodec()).apply(builder, (template1, projection) -> new HalloweenStructureElement(template1, ProcessorLists.EMPTY, projection));
     });
 
     public HalloweenStructureElement(Either<ResourceLocation, StructureTemplate> template, Holder<StructureProcessorList> processors, StructureTemplatePool.Projection projection) {

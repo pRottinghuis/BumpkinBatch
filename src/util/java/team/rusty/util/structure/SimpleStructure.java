@@ -1,11 +1,11 @@
 package team.rusty.util.structure;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.worldgen.Pools;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 
@@ -26,10 +26,14 @@ public abstract class SimpleStructure extends StructureFeature<JigsawConfigurati
                 return Optional.empty();
             } else {
                 BlockPos blockpos = new BlockPos(context.chunkPos().getMinBlockX(), baseHeight, context.chunkPos().getMinBlockZ());
-                Pools.bootstrap();
                 return JigsawPlacement.addPieces(context, pieceFactory, blockpos, split, raiseToGround);
             }
         });
+    }
+
+    @Override
+    public PostPlacementProcessor getPostPlacementProcessor() {
+        return super.getPostPlacementProcessor();
     }
 
     protected static boolean canSpawn(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
